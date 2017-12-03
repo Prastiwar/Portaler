@@ -44,7 +44,7 @@ namespace Cinemachine
         /// <summary>
         /// The dutch (tilt) to be applied to the camera. In degrees
         /// </summary>
-        [Range(-180f, 180f)]
+        [Range(-179f, 180f)]
         [Tooltip("Camera Z roll, or tilt, in degrees.")]
         public float Dutch;
 

@@ -108,19 +108,6 @@ namespace Cinemachine
         /// <summary>Internal API for the Inspector editor</summary>
         [HideInInspector][SerializeField] public ParentHash[] m_ParentHash = null;
 
-        /// <summary>Gets a brief debug description of this virtual camera, for use when displayiong debug info</summary>
-        public override string Description 
-        { 
-            get 
-            { 
-                // Show the active camera and blend
-                ICinemachineCamera vcam = LiveChild;
-                if (mActiveBlend == null) 
-                    return (vcam != null) ? "[" + vcam.Name + "]" : "(none)";
-                return mActiveBlend.Description;
-            }
-        }
-        
         /// <summary>Get the current "best" child virtual camera, that would be chosen
         /// if the State Driven Camera were active.</summary>
         public ICinemachineCamera LiveChild { set; get; }
@@ -212,7 +199,7 @@ namespace Cinemachine
                         curve, duration, mActiveBlend, deltaTime);
 
                 // Notify incoming camera of transition
-                LiveChild.OnTransitionFromCamera(previousCam, worldUp, deltaTime);
+                LiveChild.OnTransitionFromCamera(previousCam);
 
                 // Generate Camera Activation event if live
                 CinemachineCore.Instance.GenerateCameraActivationEvent(LiveChild);
@@ -238,6 +225,12 @@ namespace Cinemachine
             }
             else if (LiveChild != null)
                 m_State =  LiveChild.State;
+
+            // Push the raw position back to the game object's transform, so it
+            // moves along with the camera.  Leave the orientation alone, because it
+            // screws up camera dragging when there is a LookAt behaviour.
+            if (Follow != null)
+                transform.position = State.RawPosition;
 
             PreviousStateIsValid = true;
             //UnityEngine.Profiling.Profiler.EndSample();
@@ -266,7 +259,13 @@ namespace Cinemachine
                 CinemachineGameWindowDebug.ReleaseScreenPos(this);
             else
             {
-                string text = Name + ": " + Description;
+                // Show the active camera and blend
+                ICinemachineCamera vcam = LiveChild;
+                string text = "CM " + gameObject.name + ": ";
+                if (mActiveBlend == null)
+                    text += (vcam != null) ? vcam.Name : "(none)";
+                else
+                    text += mActiveBlend.Description;
                 Rect r = CinemachineGameWindowDebug.GetScreenPos(this, text, GUI.skin.box);
                 GUI.Label(r, text, GUI.skin.box);
             }

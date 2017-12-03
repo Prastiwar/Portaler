@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEditor;
 using System;
-using System.IO;
 
 namespace Cinemachine.Editor
 {
@@ -36,32 +35,6 @@ namespace Cinemachine.Editor
             Undo.RegisterCreatedObjectUndo(go, "create FreeLook");
             Undo.AddComponent<CinemachineFreeLook>(go);
             Selection.activeGameObject = go;
-        }
-
-        [MenuItem("Cinemachine/Create Blend List Camera", false, 1)]
-        private static void CreateBlendListCamera()
-        {
-            CreateCameraBrainIfAbsent();
-            GameObject go = new GameObject(
-                    GenerateUniqueObjectName(typeof(CinemachineBlendListCamera), "CM BlendListCamera"));
-            Undo.RegisterCreatedObjectUndo(go, "create Blend List camera");
-            var vcam = Undo.AddComponent<CinemachineBlendListCamera>(go);
-            Selection.activeGameObject = go;
-
-            // Give it a couple of children
-            var child1 = CreateDefaultVirtualCamera();
-            Undo.SetTransformParent(child1.transform, go.transform, "create BlendListCam child");
-            var child2 = CreateDefaultVirtualCamera();
-            child2.m_Lens.FieldOfView = 10;
-            Undo.SetTransformParent(child2.transform, go.transform, "create BlendListCam child");
-
-            // Set up initial instruction set
-            vcam.m_Instructions = new CinemachineBlendListCamera.Instruction[2];
-            vcam.m_Instructions[0].m_VirtualCamera = child1;
-            vcam.m_Instructions[0].m_Hold = 1f;
-            vcam.m_Instructions[1].m_VirtualCamera = child2;
-            vcam.m_Instructions[1].m_Blend.m_Style = CinemachineBlendDefinition.Style.EaseInOut;
-            vcam.m_Instructions[1].m_Blend.m_Time = 2f;
         }
 
         [MenuItem("Cinemachine/Create State-Driven Camera", false, 1)]
@@ -158,17 +131,6 @@ namespace Cinemachine.Editor
             CinemachineDollyCart cart = Undo.AddComponent<CinemachineDollyCart>(go);
             Undo.RecordObject(cart, "create track");
             cart.m_Path = path;
-        }
-
-        [MenuItem("Cinemachine/Import Example Asset Package")]
-        private static void ImportExamplePackage()
-        {
-            string pkgFile = ScriptableObjectUtility.CinemachineInstallPath 
-                + "/CinemachineExamples.unitypackage";
-            if (!File.Exists(pkgFile))
-                Debug.LogError("Missing file " + pkgFile);
-            else
-                AssetDatabase.ImportPackage(pkgFile, true);
         }
 
         /// <summary>

@@ -151,9 +151,8 @@ namespace Cinemachine
             // Make the rigs visible instead of destroying - this is to keep Undo happy
             if (m_Rigs != null)
                 foreach (var rig in m_Rigs)
-                    if (rig != null && rig.gameObject != null)
-                        rig.gameObject.hideFlags
-                            &= ~(HideFlags.HideInHierarchy | HideFlags.HideInInspector);
+                    rig.gameObject.hideFlags
+                        &= ~(HideFlags.HideInHierarchy | HideFlags.HideInInspector);
 
             mIsDestroyed = true;
             base.OnDestroy();
@@ -231,8 +230,34 @@ namespace Cinemachine
             UpdateRigCache();
             if (m_Rigs != null)
                 foreach (var vcam in m_Rigs)
-                    if (vcam != null)
-                        vcam.RemovePostPipelineStageHook(d);
+                    vcam.RemovePostPipelineStageHook(d);
+        }
+
+        /// <summary>
+        /// This is called prior to the updating of the vcam's child cameras, 
+        /// in order to allow the parent to prepare its children.
+        /// If the children are updating on FixedUpdate, then this will not necessarily be called
+        /// prior to every FixedUpdate, but might be called on LateUpdate.
+        /// This implementation pushes the axis values to the rigs.
+        /// </summary>
+        /// <param name="worldUp">Default world Up, set by the CinemachineBrain</param>
+        /// <param name="deltaTime">Delta time for time-based effects (ignore if less than 0)</param>
+        override public void PreUpdateChildCameras(Vector3 worldUp, float deltaTime)
+        {
+            if (!PreviousStateIsValid)
+                deltaTime = -1;
+
+            UpdateRigCache();
+
+            // Read the Height
+            bool activeCam = (deltaTime >= 0) || CinemachineCore.Instance.IsLive(this);
+            if (activeCam)
+                m_YAxis.Update(deltaTime);
+
+            // Reads the heading.  Make sure all the rigs get updated first
+            PushSettingsToRigs();
+            if (activeCam)
+                UpdateHeading(deltaTime, m_State.ReferenceUp);
         }
 
         /// <summary>Called by CinemachineCore at designated update time
@@ -259,34 +284,17 @@ namespace Cinemachine
             // moves along with the camera.  Leave the orientation alone, because it
             // screws up camera dragging when there is a LookAt behaviour.
             if (Follow != null)
-            {
-                Vector3 delta = State.RawPosition - transform.position;
                 transform.position = State.RawPosition;
-                m_Rigs[0].transform.position -= delta;
-                m_Rigs[1].transform.position -= delta;
-                m_Rigs[2].transform.position -= delta;
-            }
 
             PreviousStateIsValid = true;
-
-            // Set up for next frame
-            bool activeCam = (deltaTime >= 0) || CinemachineCore.Instance.IsLive(this);
-            if (activeCam)
-                m_YAxis.Update(deltaTime);
-
-            PushSettingsToRigs();
-                 
             //UnityEngine.Profiling.Profiler.EndSample();
         }
 
         /// <summary>If we are transitioning from another FreeLook, grab the axis values from it.</summary>
         /// <param name="fromCam">The camera being deactivated.  May be null.</param>
-        /// <param name="worldUp">Default world Up, set by the CinemachineBrain</param>
-        /// <param name="deltaTime">Delta time for time-based effects (ignore if less than or equal to 0)</param>
-        public override void OnTransitionFromCamera(
-            ICinemachineCamera fromCam, Vector3 worldUp, float deltaTime) 
+        override public void OnTransitionFromCamera(ICinemachineCamera fromCam)
         {
-            base.OnTransitionFromCamera(fromCam, worldUp, deltaTime);
+            base.OnTransitionFromCamera(fromCam);
             if ((fromCam != null) && (fromCam is CinemachineFreeLook))
             {
                 CinemachineFreeLook freeLookFrom = fromCam as CinemachineFreeLook;
@@ -294,7 +302,7 @@ namespace Cinemachine
                 {
                     m_XAxis.Value = freeLookFrom.m_XAxis.Value;
                     m_YAxis.Value = freeLookFrom.m_YAxis.Value;
-                    UpdateCameraState(worldUp, deltaTime);
+                    PushSettingsToRigs();
                 }
             }
         }
@@ -416,33 +424,28 @@ namespace Cinemachine
 
         private void UpdateRigCache()
         {
-            //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.UpdateRigCache");
             if (mIsDestroyed)
-            {
-                //UnityEngine.Profiling.Profiler.EndSample();
                 return;
-            }
 
             // Special condition: Did we just get copy/pasted?
-            if (m_Rigs != null && m_Rigs.Length == 3 && m_Rigs[0] != null && m_Rigs[0].transform.parent != transform)
+            string[] rigNames = RigNames;
+            if (m_Rigs != null && m_Rigs.Length == rigNames.Length
+                && m_Rigs[0] != null && m_Rigs[0].transform.parent != transform)
             {
                 DestroyRigs();
                 m_Rigs = CreateRigs(m_Rigs);
             }
 
             // Early out if we're up to date
-            if (mOrbitals != null && mOrbitals.Length == 3)
-            {
-                //UnityEngine.Profiling.Profiler.EndSample();
+            if (mOrbitals != null && mOrbitals.Length == rigNames.Length)
                 return;
-            }
 
             // Locate existing rigs, and recreate them if any are missing
-            if (LocateExistingRigs(RigNames, false) != 3)
+            if (LocateExistingRigs(rigNames, false) != rigNames.Length)
             {
                 DestroyRigs();
                 m_Rigs = CreateRigs(null);
-                LocateExistingRigs(RigNames, true);
+                LocateExistingRigs(rigNames, true);
             }
 
             foreach (var rig in m_Rigs)
@@ -464,7 +467,6 @@ namespace Cinemachine
             // Vertical rotation cleamped to [0,1] as it is a t-value for the
             // catmull-rom spline going through the 3 points on the rig
             m_YAxis.SetThresholds(0f, 1f, false);
-            //UnityEngine.Profiling.Profiler.EndSample();
         }
 
         private int LocateExistingRigs(string[] rigNames, bool forceOrbital)
@@ -489,10 +491,6 @@ namespace Cinemachine
                             if (mOrbitals[i] != null)
                             {
                                 mOrbitals[i].m_HeadingIsSlave = true;
-                                if (i == 0)
-                                    mOrbitals[i].HeadingUpdater 
-                                        = (CinemachineOrbitalTransposer orbital, float deltaTime, Vector3 up) 
-                                            => { return orbital.UpdateHeading(deltaTime, up, ref m_XAxis); };
                                 m_Rigs[i] = vcam;
                                 ++rigsFound;
                             }
@@ -505,26 +503,16 @@ namespace Cinemachine
 
         void PushSettingsToRigs()
         {
-            //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.PushSettingsToRigs");
             UpdateRigCache();
             for (int i = 0; i < m_Rigs.Length; ++i)
             {
-                //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.PushSettingsToRigs.m_Rigs[i] == null");
                 if (m_Rigs[i] == null)
-                {
-                    //UnityEngine.Profiling.Profiler.EndSample();
                     continue;
-                }
-                //UnityEngine.Profiling.Profiler.EndSample();
-
-                //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.PushSettingsToRigs.m_CommonLens");
                 if (m_CommonLens)
                     m_Rigs[i].m_Lens = m_Lens;
-                //UnityEngine.Profiling.Profiler.EndSample();
 
                 // If we just deserialized from a legacy version, 
                 // pull the orbits and targets from the rigs
-                //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.PushSettingsToRigs.mUseLegacyRigDefinitions");
                 if (mUseLegacyRigDefinitions)
                 {
                     mUseLegacyRigDefinitions = false;
@@ -534,39 +522,28 @@ namespace Cinemachine
                         Follow = m_Rigs[i].Follow;
                 }
                 m_Rigs[i].Follow = null;
-                //UnityEngine.Profiling.Profiler.EndSample();
 
                 // Hide the rigs from prying eyes
-                //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.PushSettingsToRigs.Hide the rigs");
                 if (CinemachineCore.sShowHiddenObjects)
                     m_Rigs[i].gameObject.hideFlags
                         &= ~(HideFlags.HideInHierarchy | HideFlags.HideInInspector);
                 else
                     m_Rigs[i].gameObject.hideFlags
                         |= (HideFlags.HideInHierarchy | HideFlags.HideInInspector);
-                //UnityEngine.Profiling.Profiler.EndSample();
 
-                //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.PushSettingsToRigs.Push");
                 mOrbitals[i].m_FollowOffset = GetLocalPositionForCameraFromInput(m_YAxis.Value);
                 mOrbitals[i].m_BindingMode = m_BindingMode;
                 mOrbitals[i].m_Heading = m_Heading;
+                mOrbitals[i].m_HeadingIsSlave = true;
                 mOrbitals[i].m_XAxis = m_XAxis;
                 mOrbitals[i].m_RecenterToTargetHeading = m_RecenterToTargetHeading;
                 if (i > 0)
                     mOrbitals[i].m_RecenterToTargetHeading.m_enabled = false;
-
-                // Hack to get SimpleFollow with heterogeneous dampings to work
-                if (m_BindingMode == CinemachineTransposer.BindingMode.SimpleFollowWithWorldUp)
-                    m_Rigs[i].SetStateRawPosition(State.RawPosition);
-
-                //UnityEngine.Profiling.Profiler.EndSample();
             }
-            //UnityEngine.Profiling.Profiler.EndSample();
         }
 
         private CameraState CalculateNewState(Vector3 worldUp, float deltaTime)
         {
-            //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.CalculateNewState");
             CameraState state = PullStateFromVirtualCamera(worldUp);
 
             // Blend from the appropriate rigs
@@ -589,8 +566,24 @@ namespace Cinemachine
                     state = mBlendB.State;
                 }
             }
-            //UnityEngine.Profiling.Profiler.EndSample();
             return state;
+        }
+
+        void UpdateHeading(float deltaTime, Vector3 up)
+        {
+            // We let the first rig calculate the heading
+            if (mOrbitals[0] != null)
+            {
+                mOrbitals[0].UpdateHeading(deltaTime, up);
+                m_XAxis = mOrbitals[0].m_XAxis;
+            }
+            // Then push it to the other rigs
+            for (int i = 1; i < mOrbitals.Length; ++i)
+                if (mOrbitals[i] != null)
+                    mOrbitals[i].m_XAxis = m_XAxis;
+
+            if (m_BindingMode == CinemachineTransposer.BindingMode.SimpleFollowWithWorldUp)
+                m_XAxis.Value = 0;
         }
 
         private CameraState PullStateFromVirtualCamera(Vector3 worldUp)
@@ -619,12 +612,9 @@ namespace Cinemachine
         /// supplied t-value</returns>
         public Vector3 GetLocalPositionForCameraFromInput(float t)
         {
-            //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.GetLocalPositionForCameraFromInput");
             if (mOrbitals == null)
-            {
-                //UnityEngine.Profiling.Profiler.EndSample();
                 return Vector3.zero;
-            }
+
             UpdateCachedSpline();
             int n = 1;
             if (t > 0.5f)
@@ -632,7 +622,6 @@ namespace Cinemachine
                 t -= 0.5f;
                 n = 2;
             }
-            //UnityEngine.Profiling.Profiler.EndSample();
             return SplineHelpers.Bezier3(
                 t * 2f, m_CachedKnots[n], m_CachedCtrl1[n], m_CachedCtrl2[n], m_CachedKnots[n+1]);
         }
@@ -644,11 +633,10 @@ namespace Cinemachine
         Vector4[] m_CachedCtrl2;
         void UpdateCachedSpline()
         {
-            //UnityEngine.Profiling.Profiler.BeginSample("CinemachineFreeLook.UpdateCachedSpline");
             bool cacheIsValid = (m_CachedOrbits != null && m_CachedTension == m_SplineCurvature);
             for (int i = 0; i < 3 && cacheIsValid; ++i)
-                cacheIsValid = (m_CachedOrbits[i].m_Height == m_Orbits[i].m_Height 
-                    && m_CachedOrbits[i].m_Radius == m_Orbits[i].m_Radius);
+                if (!m_CachedOrbits[i].Equals(m_Orbits[i]))
+                    cacheIsValid = false;
             if (!cacheIsValid)
             {
                 float t = m_SplineCurvature;
@@ -667,7 +655,6 @@ namespace Cinemachine
                     m_CachedOrbits[i] = m_Orbits[i];
                 m_CachedTension = m_SplineCurvature;
             }
-            //UnityEngine.Profiling.Profiler.EndSample();
         }
     }
 }

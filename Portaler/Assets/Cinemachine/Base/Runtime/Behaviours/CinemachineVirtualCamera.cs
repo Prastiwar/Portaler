@@ -315,8 +315,8 @@ namespace Cinemachine
                 {
                     if (components[i].Stage == stage)
                     {
-                        components[i].enabled = false;
-                        DestroyImmediate(components[i]);
+                        DestroyObject(components[i] as MonoBehaviour);
+                        components[i] = null;
                     }
                 }
             }
@@ -334,8 +334,7 @@ namespace Cinemachine
                 {
                     if (c is T)
                     {
-                        c.enabled = false;
-                        DestroyImmediate(c);
+                        DestroyObject(c);
                         InvalidateComponentPipeline();
                     }
                 }
@@ -350,8 +349,8 @@ namespace Cinemachine
         {
             CinemachineComponentBase[] components = GetComponentPipeline();
             if (components != null)
-                for (int i = 0; i < components.Length; ++i)
-                    components[i].OnPositionDragged(delta);
+                foreach (var c in components)
+                    c.OnPositionDragged(delta);
         }
 
         CameraState m_State = CameraState.Default; // Current state this frame
@@ -417,9 +416,6 @@ namespace Cinemachine
             if (m_ComponentPipeline != null)
             {
                 for (int i = 0; i < m_ComponentPipeline.Length; ++i)
-                    m_ComponentPipeline[i].PrePipelineMutateCameraState(ref state);
-
-                for (int i = 0; i < m_ComponentPipeline.Length; ++i)
                 {
                     curStage = AdvancePipelineStage(
                         ref state, deltaTime, curStage, (int)m_ComponentPipeline[i].Stage);
@@ -457,8 +453,5 @@ namespace Cinemachine
 
             return state;
         }
-
-        // This is a hack for FreeLook rigs - to be removed
-        internal void SetStateRawPosition(Vector3 pos) { m_State.RawPosition = pos; }
     }
 }

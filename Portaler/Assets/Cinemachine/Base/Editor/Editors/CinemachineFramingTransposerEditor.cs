@@ -133,7 +133,7 @@ namespace Cinemachine.Editor
             // Draw an on-screen gizmo for the target
             if (Target.FollowTarget != null && isLive)
             {
-                Vector3 targetScreenPosition = brain.OutputCamera.WorldToScreenPoint(Target.TrackedPoint);
+                Vector3 targetScreenPosition = brain.OutputCamera.WorldToScreenPoint(Target.FollowTarget.position);
                 if (targetScreenPosition.z > 0)
                 {
                     targetScreenPosition.y = Screen.height - targetScreenPosition.y;

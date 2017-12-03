@@ -1,15 +1,4 @@
-<size=20><b>Version 2.1.10</b></size>
-
-- New Aim component: Same As Follow Target simply uses the same orientation as the Follow target
-- Perlin Noise component: added UI to clone or locate existing Noise profiles, and to create new ones inspector
-- Noise Presets were moved outside of the Examples folder
-- Example Assets are now included as embedded package, not imported by default
-- Bugfix: FreeLook with PositionDelta was not properly updating the heading
-- Bugfix: Transitioning between FreeLooks simetimes caused a short camera freeze
-- Bugfix: Added some null checks to FreeLook, to prevent error messages at build time
-
-
-<size=20><b>Version 2.1.09</b></size>
+<size=20><b>Version 2.1</b></size>
 
 <size=12><b>New Features</b></size>
 
@@ -19,7 +8,6 @@
 - New <b>Framing Transposer</b>.  This is a special transposer that will respect composition and framing rules by moving the camera without rotating it.  Takes only a Follow Target (no LookAt - this is important).  Designed for Orthographic cameras, but will also work for Perspective cameras.  If Follow target is a CinemachineTargetGroup, then will also provide Group Framing options.
 - New <b>CinemachinePOV</b> Aim component.  Camera aim is entirely controlled by user, using 2 input axes.
 - New <b>CinemachineMixingCamera</b>.  Drive a continuous blend of up to 8 virtual cameras from timeline or game logic.  Create complex rigs with custom blends and expose them as ordinary vcams.
-- New <b>CinemachineBlendListCamera</b>.  A mini vcam sequencer that provides a quick and easy way to do AB camera moves on the fly.
 - New <b>CinemachineDollyCart</b> behaviour, for moving anything along a path.  No need to create dummy vcams just for that.
 - New <b>CinemachineSmoothPath</b> component.  You can use it instead of the old CinemachinePath.  The difference is that the SmoothPath guarantees second-order continuity, which means that there will never be any sudden camera rotation changes baked into the path tangents.  Easier to use, too: no tangents to mess around with (they get automatically set for smoothness).
 - Path now supports <b>Distance Units</b> in addition to Path units, making it easy to create steady motion.

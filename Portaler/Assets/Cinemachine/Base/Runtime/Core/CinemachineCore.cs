@@ -153,24 +153,33 @@ namespace Cinemachine
         /// <summary>Update all the active vcams in the scene, in the correct dependency order.</summary>
         internal void UpdateAllActiveVirtualCameras(Vector3 worldUp, float deltaTime)
         {
-            //UnityEngine.Profiling.Profiler.BeginSample("CinemachineCore.UpdateAllActiveVirtualCameras");
             int numCameras;
 
+            // Pre-update child unless smart/fixed
+            if (CurrentUpdateFilter == UpdateFilter.Any || CurrentUpdateFilter == UpdateFilter.Late)
+            {
+                numCameras = VirtualCameraCount;
+                for (int i = 0; i < numCameras; ++i)
+                    GetVirtualCamera(i).PreUpdateChildCameras(worldUp, deltaTime);
+                for (int i = 0; i < mChildCameras.Count-1; ++i)
+                {
+                    numCameras = mChildCameras[i].Count;
+                    for (int j = 0; j < numCameras; ++j)
+                        mChildCameras[i][j].PreUpdateChildCameras(worldUp, deltaTime);
+                }
+            }
+
             // Update the leaf-most cameras first
-            //UnityEngine.Profiling.Profiler.BeginSample("CinemachineCore.UpdateAllActiveVirtualCameras.leaf-most");
             for (int i = mChildCameras.Count-1; i >= 0; --i)
             {
                 numCameras = mChildCameras[i].Count;
                 for (int j = 0; j < numCameras; ++j)
                     UpdateVirtualCamera(mChildCameras[i][j], worldUp, deltaTime);
             }
-            //UnityEngine.Profiling.Profiler.EndSample();
-
             // Then all the top-level cameras
             numCameras = VirtualCameraCount;
             for (int i = 0; i < numCameras; ++i)
                 UpdateVirtualCamera(GetVirtualCamera(i), worldUp, deltaTime);
-            //UnityEngine.Profiling.Profiler.EndSample();
         }
 
         /// <summary>
@@ -182,17 +191,8 @@ namespace Cinemachine
         {
             //UnityEngine.Profiling.Profiler.BeginSample("CinemachineCore.UpdateVirtualCamera");
             int now = Time.frameCount;
-            UpdateFilter filter = CurrentUpdateFilter;
-            bool isSmartUpdate = filter != UpdateFilter.ForcedFixed 
-                && filter != UpdateFilter.ForcedLate;
-            bool isSmartLateUpdate = filter == UpdateFilter.Late;
-            if (!isSmartUpdate)
-            {
-                if (filter == UpdateFilter.ForcedFixed)
-                    filter = UpdateFilter.Fixed;
-                if (filter == UpdateFilter.ForcedLate)
-                    filter = UpdateFilter.Late;
-            }
+            bool isSmartUpdate = CurrentUpdateFilter != UpdateFilter.Any;
+            bool isSmartLateUpdate = CurrentUpdateFilter == UpdateFilter.Late;
 
             if (mUpdateStatus == null)
                 mUpdateStatus = new Dictionary<ICinemachineCamera, UpdateStatus>();
@@ -224,16 +224,16 @@ namespace Cinemachine
                 if (!GetTargetPosition(vcam, out targetPos))
                     updateNow = isSmartLateUpdate; // no target
                 else
-                    updateNow = status.ChoosePreferredUpdate(now, targetPos, filter) 
-                        == filter;
+                    updateNow = status.ChoosePreferredUpdate(now, targetPos, CurrentUpdateFilter) 
+                        == CurrentUpdateFilter;
             }
 
             if (updateNow)
             {
-                status.preferredUpdate = filter;
+                status.preferredUpdate = CurrentUpdateFilter;
                 while (status.lastUpdateSubframe < subframes)
                 {
-//Debug.Log(vcam.Name + ": frame " + Time.frameCount + "." + status.lastUpdateSubframe + ", " + CurrentUpdateFilter + ", deltaTime = " + deltaTime);
+//Debug.Log(vcam.Name + ": frame " + Time.frameCount + "." + status.lastUpdateSubframe + ", " + CurrentUpdateFilter);
                     vcam.UpdateCameraState(worldUp, deltaTime);
                     ++status.lastUpdateSubframe;
                 }
@@ -272,7 +272,6 @@ namespace Cinemachine
                 targetPos = Matrix4x4.zero;
             }
 
-            // Important: updateFilter may ONLY be Late or Fixed
             public UpdateFilter ChoosePreferredUpdate(
                 int currentFrame, Matrix4x4 pos, UpdateFilter updateFilter)
             {
@@ -307,7 +306,7 @@ namespace Cinemachine
         Dictionary<ICinemachineCamera, UpdateStatus> mUpdateStatus;
 
         /// <summary>Internal use only</summary>
-        public enum UpdateFilter { Fixed, ForcedFixed, Late, ForcedLate };
+        public enum UpdateFilter { Fixed, Late, Any };
         internal UpdateFilter CurrentUpdateFilter { get; set; }
         private static bool GetTargetPosition(ICinemachineCamera vcam, out Matrix4x4 targetPos)
         {
@@ -338,7 +337,7 @@ namespace Cinemachine
         {
             UpdateStatus status;
             if (mUpdateStatus == null || !mUpdateStatus.TryGetValue(vcam, out status))
-                return UpdateFilter.Late;
+                return UpdateFilter.Any;
             return status.preferredUpdate;
         }
 

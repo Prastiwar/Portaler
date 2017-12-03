@@ -50,8 +50,8 @@ namespace Cinemachine
         {
             get
             {
-                string fromName = (CamA != null) ? "[" + CamA.Name + "]": "(none)";
-                string toName = (CamB != null) ? "[" + CamB.Name + "]" : "(none)";
+                string fromName = (CamA != null) ? CamA.Name : "(none)";
+                string toName = (CamB != null) ? CamB.Name : "(none)";
                 int percent = (int)(BlendWeight * 100f);
                 return string.Format("{0} {1}% from {2}", toName, percent, fromName);
             }
@@ -137,7 +137,7 @@ namespace Cinemachine
         public Style m_Style;
 
         /// <summary>The duration (in seconds) of the blend</summary>
-        [Tooltip("Duration of the blend, in seconds")]
+        [Tooltip("Duration (in seconds) of the blend")]
         public float m_Time;
 
         /// <summary>Constructor</summary>

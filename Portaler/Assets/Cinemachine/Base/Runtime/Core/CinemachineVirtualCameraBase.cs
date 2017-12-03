@@ -40,13 +40,7 @@ namespace Cinemachine
         public CinemachineCore.Stage[] m_LockStageInInspector;
 
         /// <summary>Version that was last streamed, for upgrading legacy</summary>
-        public int ValidatingStreamVersion 
-        { 
-            get { return m_OnValidateCalled ? m_ValidatingStreamVersion : CinemachineCore.kStreamingVersion; }
-            private set { m_ValidatingStreamVersion = value; } 
-        }
-        private int m_ValidatingStreamVersion = 0;
-        private bool m_OnValidateCalled = false;
+        public int ValidatingStreamVersion { get; private set; }
 
         [HideInInspector, SerializeField, NoSaveDuringPlay]
         private int m_StreamingVersion;
@@ -120,9 +114,6 @@ namespace Cinemachine
         /// <summary>Get the name of the Virtual Camera.  Base implementation
         /// returns the owner GameObject's name.</summary>
         public string Name { get { return name; } }
-
-        /// <summary>Gets a brief debug description of this virtual camera, for use when displayiong debug info</summary>
-        public virtual string Description { get { return ""; }}
 
         /// <summary>Get the Priority of the virtual camera.  This determines its placement
         /// in the CinemachineCore's queue of eligible shots.</summary>
@@ -198,6 +189,19 @@ namespace Cinemachine
         private Transform m_previousLookAtTarget;
         private Transform m_previousFollowTarget;
 
+        
+        /// <summary>
+        /// This is called prior to the updating of the vcam's child cameras, 
+        /// in order to allow the parent to prepare its children.
+        /// If the children are updating on FixedUpdate, then this will not necessarily be called
+        /// prior to every FixedUpdate, but it might be called on LateUpdate instead.
+        /// Base class implementation does nothing.
+        /// </summary>
+        /// <param name="worldUp">Default world Up, set by the CinemachineBrain</param>
+        /// <param name="deltaTime">Delta time for time-based effects (ignore if less than 0)</param>
+        public virtual void PreUpdateChildCameras(Vector3 worldUp, float deltaTime)
+        {
+        }
 
         /// <summary>Called by CinemachineCore at designated update time
         /// so the vcam can position itself and track its targets.  
@@ -209,10 +213,7 @@ namespace Cinemachine
         /// <summary>Notification that this virtual camera is going live.
         /// Base class implementationmust be called by any overridden method.</summary>
         /// <param name="fromCam">The camera being deactivated.  May be null.</param>
-        /// <param name="worldUp">Default world Up, set by the CinemachineBrain</param>
-        /// <param name="deltaTime">Delta time for time-based effects (ignore if less than or equal to 0)</param>
-        public virtual void OnTransitionFromCamera(
-            ICinemachineCamera fromCam, Vector3 worldUp, float deltaTime) 
+        public virtual void OnTransitionFromCamera(ICinemachineCamera fromCam) 
         {
             if (!gameObject.activeInHierarchy)
                 PreviousStateIsValid = false;
@@ -234,7 +235,6 @@ namespace Cinemachine
         /// After base method is called, ValidatingStreamVersion will be valid.</summary>
         protected virtual void OnValidate()
         {
-            m_OnValidateCalled = true;
             ValidatingStreamVersion = m_StreamingVersion;
             m_StreamingVersion = CinemachineCore.kStreamingVersion;
         }
