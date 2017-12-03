@@ -21,6 +21,7 @@ public class Fader : MonoBehaviour {
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
     }
+
     //Remove callback
     void OnDisable()
     {
@@ -28,30 +29,38 @@ public class Fader : MonoBehaviour {
     }
 
     //Create a texture , Color it, Paint It , then Fade Away
-    void OnGUI () {
+    void OnGUI ()
+    {
         //Fallback check
         if (!start)
 			return;
+
         //Assign the color with variable alpha
 		GUI.color = new Color (GUI.color.r, GUI.color.g, GUI.color.b, alpha);
+
         //Temp Texture
 		Texture2D myTex;
 		myTex = new Texture2D (1, 1);
 		myTex.SetPixel (0, 0, fadeColor);
 		myTex.Apply ();
+
         //Print Texture
 		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), myTex);
+
         //Fade in and out control
         if (isFadeIn)
 			alpha = Mathf.Lerp (alpha, -0.1f, fadeDamp * Time.deltaTime);
 		else
 			alpha = Mathf.Lerp (alpha, 1.1f, fadeDamp * Time.deltaTime);
+
         //Load scene
-		if (alpha >= 1 && !isFadeIn) {
+		if (alpha >= 1 && !isFadeIn)
+        {
             SceneManager.LoadScene(fadeScene);
             DontDestroyOnLoad(gameObject);		
-		} else
-		if (alpha <= 0 && isFadeIn) {
+		}
+        else if (alpha <= 0 && isFadeIn)
+        {
 			Destroy(gameObject);		
 		}
 
