@@ -1,24 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class StateMachineManager
+public class StateMachineManager : MonoBehaviour
 {
-    public static void ChangeScene(Animator animator)
+    public static StateMachineManager Instance;
+    void Awake()
     {
-        string _SceneName = null;
-
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Game State"))
-            _SceneName = "Game";
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Level State"))
-            _SceneName = "Levels";
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Shop State"))
-            _SceneName = "Shop";
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Menu State"))
-            _SceneName = "Menu";
+        DontDestroyOnLoad(this);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
         else
+        {
+            Destroy(this.gameObject);
             return;
-
-        Initiate.Fade(_SceneName, Color.black, 1.3f);
+        }
     }
+
+    public static void ChangeState(Scene scene)
+    {
+        Animator animator = GameObject.FindGameObjectWithTag("PauseButton").GetComponent<Animator>();
+        animator.SetTrigger(scene.name);
+    }
+
+
 }

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuState : StateMachineBehaviour
+public class ShopStateBehaviour : StateMachineBehaviour
 {
+
     public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         
@@ -16,6 +17,6 @@ public class MenuState : StateMachineBehaviour
 
     public override void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        StateMachineManager.ChangeScene(animator);
+
     }
 }

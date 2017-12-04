@@ -63,13 +63,15 @@ public class Fader : MonoBehaviour {
         {
 			Destroy(gameObject);		
 		}
-
 	}
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         //We can now fade in
         isFadeIn = true;
+        
+        // Change state after load
+        StateMachineManager.ChangeState(scene);
     }
 
 }
