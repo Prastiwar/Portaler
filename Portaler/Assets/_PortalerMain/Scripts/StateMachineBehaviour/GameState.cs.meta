@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e700e45d03d58cc46ba49ba4e781698a
+timeCreated: 1512399962
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - onPauseButton: {fileID: 114328947242980298, guid: 7cb3aa3e6d9f3a440a312a2cc9e11f80,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

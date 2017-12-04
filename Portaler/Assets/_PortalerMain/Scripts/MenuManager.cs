@@ -4,15 +4,40 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    string _GameScene = "Game";
-    string _ShopScene = "Shop";
-    string _LevelsScene = "Levels";
-    float _dampTime = 1.3f;
+    public static MenuManager Instance;
 
-    bool isPaused = false;
-    [SerializeField] GameObject _PauseMenu;
+    //string _GameScene = "Game";
+    //string _ShopScene = "Shop";
+    //string _LevelsScene = "Levels";
+    //float _dampTime = 1.3f;
+    //static Animator animator;
 
-    public void OnBack(string previousScene)
+    //bool isPaused = false;
+    //[SerializeField] GameObject _PauseMenu;
+
+    void Awake()
+    {
+        DontDestroyOnLoad(this);
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        //animator = GetComponent<Animator>();
+    }
+
+    //public static void ChangeState(string state)
+    //{
+    //    animator.SetTrigger(state);
+    //}
+
+
+    /*public void OnBack(string previousScene)
     {
         Initiate.Fade(previousScene, Color.black, _dampTime);
     }
@@ -37,6 +62,6 @@ public class MenuManager : MonoBehaviour
         Time.timeScale = isPaused ? 1 : 0;
         isPaused = !isPaused;
         _PauseMenu.SetActive(!_PauseMenu.activeSelf);
-    }
+    }*/
 
 }

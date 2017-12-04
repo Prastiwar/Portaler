@@ -11,3 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_PortalerMain/_Scenes/Menu.unity
     guid: cd003512234afe54da9bbf731188277d
+  - enabled: 1
+    path: Assets/_PortalerMain/_Scenes/Levels.unity
+    guid: 614b23ba0b1a57845a79da2ae066ccf8
+  - enabled: 1
+    path: Assets/_PortalerMain/_Scenes/Shop.unity
+    guid: c98d8cb6f72d7214b8d7282ee05fb7fa
