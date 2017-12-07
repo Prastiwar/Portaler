@@ -11,12 +11,16 @@ public class PlayerMotor : MonoBehaviour
 
     public float moveSpeed = 1200;
     public float jumpForce = 250;
+    public Transform weaponPos;
+    float moveHorizontal;
+
     Rigidbody2D rb2D;
     Vector2 _rb2dVelocity;
     SpriteRenderer sr;
+
     Animator anim;
     int animWalk = Animator.StringToHash("Walk");
-    float moveHorizontal;
+
     [SerializeField] LayerMask ground;
     [SerializeField] Transform groundPos;
     bool canMove = true;
@@ -37,6 +41,15 @@ public class PlayerMotor : MonoBehaviour
         anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+    }
+
+    void LateUpdate()
+    {
+        // Gun is looking at mouse position
+        Vector2 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - weaponPos.position;
+        diff.Normalize();
+        float rotZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        weaponPos.rotation = Quaternion.Euler(0f, 0f, rotZ);
     }
 
     void FixedUpdate()
@@ -105,9 +118,15 @@ public class PlayerMotor : MonoBehaviour
 
             // Face to direction
             if (moveHorizontal > 0 && sr.flipX) // if going right, set "flip" to false - (to right direction)
+            {
                 sr.flipX = false;
+                //weaponPos.transform.position = new Vector3(weaponPos.transform.position.y + 1, weaponPos.transform.position.y, weaponPos.transform.position.z);
+            }
             else if (moveHorizontal < 0 && !sr.flipX) // if going left, set "flip" to true - (to left direction)
+            {
                 sr.flipX = true;
+                //weaponPos.transform.position = new Vector3(weaponPos.transform.position.y - 1, weaponPos.transform.position.y, weaponPos.transform.position.z);
+            }
         }
     }
 

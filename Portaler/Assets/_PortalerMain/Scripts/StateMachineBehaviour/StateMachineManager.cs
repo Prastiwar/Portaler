@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class StateMachineManager : MonoBehaviour
 {
     public static StateMachineManager Instance;
+    public static Animator animator;
+    const int _MachineLayer = 9;
+
     void Awake()
     {
-        DontDestroyOnLoad(this);
         if (Instance == null)
         {
             Instance = this;
@@ -18,13 +19,19 @@ public class StateMachineManager : MonoBehaviour
             Destroy(this.gameObject);
             return;
         }
+        DontDestroyOnLoad(this);
+
+        animator = GameObjectFindWithLayer.Find(_MachineLayer).GetComponent<Animator>();
     }
 
-    public static void ChangeState(Scene scene)
+    public static void ChangeStateTo(string sceneName)
     {
-        Animator animator = GameObject.FindGameObjectWithTag("PauseButton").GetComponent<Animator>();
-        animator.SetTrigger(scene.name);
+        animator.SetTrigger(sceneName);
     }
 
+    public static void ChangeSceneTo(string _SceneName)
+    {
+        Initiate.Fade(_SceneName, Color.black, 1.3f);
+    }
 
 }
