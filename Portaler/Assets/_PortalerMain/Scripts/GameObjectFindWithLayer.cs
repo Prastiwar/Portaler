@@ -13,9 +13,12 @@ public class GameObjectFindWithLayer : MonoBehaviour
 
         for (var i = 0; i < AllGameObjects.Length; i++)
         {
-            if (AllGameObjects[i].layer == layer)
+            if (AllGameObjects[i] != null)
             {
-                return AllGameObjects[i];
+                if (AllGameObjects[i].layer == layer)
+                {
+                    return AllGameObjects[i];
+                }
             }
         }
         return null;

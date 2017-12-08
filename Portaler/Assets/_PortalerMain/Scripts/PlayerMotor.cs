@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
     public static PlayerMotor instance;
+    public Transform player;
 
     public float moveSpeed = 1200;
     public float jumpForce = 250;
@@ -22,9 +23,9 @@ public class PlayerMotor : MonoBehaviour
     int animWalk = Animator.StringToHash("Walk");
 
     [SerializeField] LayerMask ground;
-    [SerializeField] Transform groundPos;
-    bool canMove = true;
+    public Transform groundPos;
     public bool isGrounded = true;
+    bool canMove = true;
 
     void Awake()
     {
@@ -38,6 +39,7 @@ public class PlayerMotor : MonoBehaviour
             return;
         }
 
+        player = this.transform;
         anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
@@ -120,12 +122,10 @@ public class PlayerMotor : MonoBehaviour
             if (moveHorizontal > 0 && sr.flipX) // if going right, set "flip" to false - (to right direction)
             {
                 sr.flipX = false;
-                //weaponPos.transform.position = new Vector3(weaponPos.transform.position.y + 1, weaponPos.transform.position.y, weaponPos.transform.position.z);
             }
             else if (moveHorizontal < 0 && !sr.flipX) // if going left, set "flip" to true - (to left direction)
             {
                 sr.flipX = true;
-                //weaponPos.transform.position = new Vector3(weaponPos.transform.position.y - 1, weaponPos.transform.position.y, weaponPos.transform.position.z);
             }
         }
     }

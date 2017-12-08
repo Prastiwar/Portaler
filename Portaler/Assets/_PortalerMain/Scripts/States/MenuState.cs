@@ -19,8 +19,7 @@ public class MenuState : MonoBehaviour
 
     }
 
-    
-    public void ChangeSceneTo(string _SceneName)
+    public void OnChangeSceneButton(string _SceneName)
     {
         StateMachineManager.ChangeSceneTo(_SceneName);
     }

@@ -69,7 +69,7 @@ public class Fader : MonoBehaviour {
     {
         //We can now fade in
         isFadeIn = true;
-        
+
         // Change state after load
         StateMachineManager.ChangeStateTo(scene.name);
     }

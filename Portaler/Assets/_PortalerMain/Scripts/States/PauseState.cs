@@ -23,6 +23,11 @@ public class PauseState : MonoBehaviour
         SwitchPause();
     }
 
+    public void OnChangeSceneButton(string _SceneName)
+    {
+        StateMachineManager.ChangeSceneTo(_SceneName);
+    }
+
     public void OnPauseButton()
     {
         string _StateTo = null;
@@ -31,16 +36,12 @@ public class PauseState : MonoBehaviour
         StateMachineManager.ChangeStateTo(_StateTo);
     }
 
-    public void ChangeSceneTo(string _SceneName)
-    {
-        StateMachineManager.ChangeSceneTo(_SceneName);
-        SwitchPause();
-    }
 
     void SwitchPause()
     {
         Time.timeScale = isPause ? 1 : 0;
         isPause = !isPause;
-        _PausePanel.SetActive(!_PausePanel.activeSelf);
+        if(_PausePanel != null)
+            _PausePanel.SetActive(!_PausePanel.activeSelf);
     }
 }

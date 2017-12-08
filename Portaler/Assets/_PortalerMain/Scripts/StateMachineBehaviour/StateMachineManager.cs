@@ -24,9 +24,9 @@ public class StateMachineManager : MonoBehaviour
         animator = GameObjectFindWithLayer.Find(_MachineLayer).GetComponent<Animator>();
     }
 
-    public static void ChangeStateTo(string sceneName)
+    public static void ChangeStateTo(string _SceneName) // must use only on fader!
     {
-        animator.SetTrigger(sceneName);
+        animator.SetTrigger(_SceneName);
     }
 
     public static void ChangeSceneTo(string _SceneName)
