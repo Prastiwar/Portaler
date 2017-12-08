@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isItFirstPortal: 0
+  isPortal: 1
 --- !u!212 &212726445737671714
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -13,6 +13,9 @@ public class EnemyStateBehaviour : MonoBehaviour
     }
     void LateUpdate()
     {
+        if (GameState.isSpotted)
+            return;
+
         Vector3 direction = sr.flipX ? -transform.right : transform.right;
         Debug.DrawRay(transform.position, direction * scriptableEnemy.rangeSigh, Color.red);
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, direction, scriptableEnemy.rangeSigh);
@@ -21,7 +24,7 @@ public class EnemyStateBehaviour : MonoBehaviour
         {
             if (hit2D.collider.gameObject.layer == 10)
             {
-                GameState.isSpotted = true;
+                GameState.GameOver(true);
             }
         }
     }

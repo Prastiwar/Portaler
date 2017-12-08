@@ -12,9 +12,9 @@ public struct Player
 public class GameState : MonoBehaviour
 {
     public static Player _player;
-    public static bool isSpotted = false;
     public static int lvlIndex = 0;
     public static int weaponIndex = 0;
+    public static bool isSpotted = false;
 
     [SerializeField] ScriptableData data;
     [SerializeField] GameObject comingSoonScene;
@@ -43,21 +43,23 @@ public class GameState : MonoBehaviour
         {
             SetPortal(Portal_2);
         }
-
-        // Game over - win or lose
-        //if (isSpotted || PlayerMotor.instance.groundPos.position == endColTransform.position)
-        //    StateMachineManager.ChangeSceneTo("Result");
     }
 
     public void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        
+    }
 
+    public static void GameOver(bool _isSpotted)
+    {
+        isSpotted = _isSpotted;
+        StateMachineManager.ChangeSceneTo("Result");
     }
 
     // What to do when player've went into portal
     public static void OnPortalEnter(Collider2D other, GameObject portal)
     {
-        GameObject _otherPortal = portal.GetComponent<PortalManager>().isItFirstPortal ? Portal_2 : Portal_1;
+        GameObject _otherPortal = portal.GetComponent<CollisionManager>().isItFirstPortal ? Portal_2 : Portal_1;
 
         if (_otherPortal.activeSelf)
         {
@@ -80,9 +82,10 @@ public class GameState : MonoBehaviour
         //    _level = Instantiate(data.Levels[lvlIndex].levelPrefab);
 
         //_player.playerTransform = PlayerMotor.instance.player;
+        isSpotted = false;
         Portal_1 = Instantiate(data.Weapons[weaponIndex].portal_1);
         Portal_2 = Instantiate(data.Weapons[weaponIndex].portal_2);
-        endColTransform = GameObjectFindWithLayer.Find(11).transform;
+        //endColTransform = .transform;
         data.Weapons[weaponIndex].ammo = data.Weapons[weaponIndex].maxAmmo;
     }
 

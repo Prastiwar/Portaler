@@ -59,8 +59,9 @@ public class ResultState : MonoBehaviour
         _StarScoreText.text = (CalculateScore() * 100).ToString();
 
         int i = GameState.lvlIndex;
+        int _Length = data.Levels.Length;
         data.Levels[i].starScoreAmount = CalculateScore();
-        if(data.Levels[i + 1] != null)
+        if((i + 1) < _Length) // Check if next level exist
             data.Levels[i + 1].isUnlocked = true;
     }
 
