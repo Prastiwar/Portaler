@@ -8,10 +8,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0726b7929efab047aa32bd5f88ba928, type: 3}
-  m_Name: First Level
+  m_Script: {fileID: 11500000, guid: 0c081d3000c18a5408f03f4ea7c6f105, type: 3}
+  m_Name: TextData
   m_EditorClassIdentifier: 
-  isUnlocked: 1
-  levelPrefab: {fileID: 0}
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  starScoreAmount: 0
+  WinText:
+  - You did it!
+  - Ha! You won!
+  LoseText:
+  - Oh my.. what a amateur..
+  - You've been spotted!

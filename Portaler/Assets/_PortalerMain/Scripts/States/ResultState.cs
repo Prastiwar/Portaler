@@ -13,12 +13,13 @@ public class ResultState : MonoBehaviour
     [SerializeField] TextMeshProUGUI _HeaderText;
     [SerializeField] TextMeshProUGUI _MoneyBalanceText;
     [SerializeField] Image _StarScoreImage;
+    [SerializeField] TextMeshProUGUI _StarScoreText;
     [SerializeField] ScriptableData data;
-    bool hasLose;
+    [SerializeField] ScriptableTextData textData;
+    bool hasLose = GameState.isSpotted;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        hasLose = GameState.isSpotted;
         SetResultScreen();
     }
 
@@ -40,25 +41,34 @@ public class ResultState : MonoBehaviour
     void SetResultScreen()
     {
         if (hasLose)
-        {
             _LosePanel.SetActive(true);
-        }
         else
-        {
             _WinPanel.SetActive(true);
-        }
 
         string retryText = "Try Again";
         string nextLevelText = "Next Level";
-        string loseText = "You're too low to do this!";
-        string winText = "You dit it! Wow!";
-
+        int randI = Random.Range(0, textData.WinText.Length);
+        int randJ = Random.Range(0, textData.LoseText.Length);
+        string loseText = textData.LoseText[randI];
+        string winText = textData.WinText[randJ];
+        
         _ToLevelButtonText.text = hasLose ? retryText : nextLevelText;
         _HeaderText.text = hasLose ? loseText : winText;
         _MoneyBalanceText.text = GameState._player.money.ToString();
-        _StarScoreImage.fillAmount = GameState._player.score;
+        _StarScoreImage.fillAmount = CalculateScore();
+        _StarScoreText.text = (CalculateScore() * 100).ToString();
 
+        int i = GameState.lvlIndex;
+        data.Levels[i].starScoreAmount = CalculateScore();
+        if(data.Levels[i + 1] != null)
+            data.Levels[i + 1].isUnlocked = true;
+    }
 
+    float CalculateScore()
+    {
+        int i = GameState.weaponIndex;
+        float result = data.Weapons[i].ammo / data.Weapons[i].maxAmmo;
+        return result;
     }
 
     public void OnLevelButton()

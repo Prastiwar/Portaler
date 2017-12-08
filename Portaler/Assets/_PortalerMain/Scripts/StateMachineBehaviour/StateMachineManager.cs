@@ -8,10 +8,6 @@ public class StateMachineManager : MonoBehaviour
     const int _MachineLayer = 9;
 
     public static Animator animator;
-    //public static ScriptableWeapon[] GetWeapon;
-    //public static ScriptableLevel[] GetLevel;
-    //[SerializeField] ScriptableWeapon[] _weapons;
-    //[SerializeField] ScriptableLevel[] _levels;
 
     void Awake()
     {
@@ -25,16 +21,16 @@ public class StateMachineManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(this);
-        //GetLevel = _levels;
-        //GetWeapon = _weapons;
         animator = GameObjectFindWithLayer.Find(_MachineLayer).GetComponent<Animator>();
     }
 
-    public static void ChangeStateTo(string _SceneName) // must use only on fader!
+    // It's changing state
+    public static void ChangeStateTo(string _StateName)
     {
-        animator.SetTrigger(_SceneName);
+        animator.SetTrigger(_StateName);
     }
 
+    // It's changing scene AND scene STATE
     public static void ChangeSceneTo(string _SceneName)
     {
         Initiate.Fade(_SceneName, Color.black, 1.3f);

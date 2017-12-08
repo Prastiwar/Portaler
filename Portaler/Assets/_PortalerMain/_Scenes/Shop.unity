@@ -325,9 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5052c5a962a0b614fa43e22fcee1c063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons:
-  - {fileID: 11400000, guid: 8a4b9abea0e6f6643850171a727256ca, type: 2}
-  - {fileID: 11400000, guid: 38d28498422d04d4da14890cc1217743, type: 2}
+  data: {fileID: 11400000, guid: eb4625ef96b65ee40a0bcc9681b7c137, type: 2}
   _ShopContent: {fileID: 358558931}
   _GunItemPrefab: {fileID: 1428652643382440, guid: 5d4f3aece9de6cb459f98114ecc30235,
     type: 2}

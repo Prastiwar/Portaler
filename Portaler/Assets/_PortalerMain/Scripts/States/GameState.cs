@@ -6,11 +6,9 @@ using UnityEngine;
 // All player statistics
 public struct Player
 {
-    public Transform playerTransform;
-    public int score;
+    //public Transform playerTransform;
     public int money;
 }
-
 public class GameState : MonoBehaviour
 {
     public static Player _player;
@@ -19,7 +17,9 @@ public class GameState : MonoBehaviour
     public static int weaponIndex = 0;
 
     [SerializeField] ScriptableData data;
+    [SerializeField] GameObject comingSoonScene;
     [SerializeField] Transform firePoint;
+    [SerializeField] Transform endColTransform;
 
     static GameObject Portal_1;
     static GameObject Portal_2;
@@ -44,18 +44,14 @@ public class GameState : MonoBehaviour
             SetPortal(Portal_2);
         }
 
-        if (isSpotted)
-            GameOver();
+        // Game over - win or lose
+        //if (isSpotted || PlayerMotor.instance.groundPos.position == endColTransform.position)
+        //    StateMachineManager.ChangeSceneTo("Result");
     }
 
     public void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
 
-    }
-
-    void GameOver()
-    {
-        StateMachineManager.ChangeSceneTo("Result");
     }
 
     // What to do when player've went into portal
@@ -77,17 +73,17 @@ public class GameState : MonoBehaviour
     // Instantiate level by index
     void SetLevel()
     {
-        //if (levels[lvlIndex] != null)
-            //Debug.Log("No more levels, if u see this call developer!");
+        //GameObject _level;
+        //if (data.Levels[lvlIndex] != null)
+        //    _level = Instantiate(comingSoonScene);
         //else
-            //GameObject _level = Instantiate(levels[lvlIndex]);
+        //    _level = Instantiate(data.Levels[lvlIndex].levelPrefab);
 
-        _player.playerTransform = PlayerMotor.instance.player;
+        //_player.playerTransform = PlayerMotor.instance.player;
         Portal_1 = Instantiate(data.Weapons[weaponIndex].portal_1);
         Portal_2 = Instantiate(data.Weapons[weaponIndex].portal_2);
+        endColTransform = GameObjectFindWithLayer.Find(11).transform;
         data.Weapons[weaponIndex].ammo = data.Weapons[weaponIndex].maxAmmo;
-
-        Debug.Log("Level was instantied");
     }
 
     // Active and setting portal position on wall

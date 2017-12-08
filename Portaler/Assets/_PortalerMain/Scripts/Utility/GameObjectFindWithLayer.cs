@@ -17,6 +17,7 @@ public class GameObjectFindWithLayer : MonoBehaviour
             {
                 if (AllGameObjects[i].layer == layer)
                 {
+                    Debug.Log(AllGameObjects[i]);
                     return AllGameObjects[i];
                 }
             }
