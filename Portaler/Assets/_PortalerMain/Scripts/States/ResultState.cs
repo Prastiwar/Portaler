@@ -13,6 +13,7 @@ public class ResultState : MonoBehaviour
     [SerializeField] TextMeshProUGUI _HeaderText;
     [SerializeField] TextMeshProUGUI _MoneyBalanceText;
     [SerializeField] Image _StarScoreImage;
+    [SerializeField] ScriptableData data;
     bool hasLose;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -56,6 +57,8 @@ public class ResultState : MonoBehaviour
         _HeaderText.text = hasLose ? loseText : winText;
         _MoneyBalanceText.text = GameState._player.money.ToString();
         _StarScoreImage.fillAmount = GameState._player.score;
+
+
     }
 
     public void OnLevelButton()

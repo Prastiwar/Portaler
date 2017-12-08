@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0dad1db1767449489bdb56b8a755a13, type: 3}
   m_Name: First Guard
   m_EditorClassIdentifier: 
-  RangeOfView: 8.87
-  MoveSpeed: 5
-  Sprite: {fileID: 0}
+  rangeSigh: 0
+  moveSpeed: 0
+  sprite: {fileID: 0}

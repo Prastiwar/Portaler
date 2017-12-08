@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LevelsState : MonoBehaviour
 {
     [SerializeField] Transform _LevelContent;
-    [SerializeField] ScriptableLevel[] levels;
+    [SerializeField] ScriptableData data;
     [SerializeField] GameObject _LevelItemPrefab;
     List<LevelItem> _LevelItemList = new List<LevelItem>();
-
+    
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         SpawnShopItems();
@@ -32,7 +31,8 @@ public class LevelsState : MonoBehaviour
 
     void SpawnShopItems()
     {
-        int _Length = levels.Length;
+        //levelsData[.ScriptableLevels[0].
+        int _Length = data.Levels.Length;
         for (int i = 0; i < _Length; i++)
         {
             GameObject _LevelItem = Instantiate(_LevelItemPrefab, _LevelContent);
@@ -44,10 +44,10 @@ public class LevelsState : MonoBehaviour
 
     void UpdateAllText(int i)
     {
-        _LevelItemList[i].lockedIcon.gameObject.SetActive(!levels[i].isUnlocked);
-        _LevelItemList[i].icon.sprite = levels[i].sprite;
-        _LevelItemList[i].starScore.fillAmount = levels[i].starScoreAmount;
-        _LevelItemList[i].itemButton.interactable = levels[i].isUnlocked;
+        _LevelItemList[i].lockedIcon.gameObject.SetActive(!data.Levels[i].isUnlocked);
+        _LevelItemList[i].icon.sprite = data.Levels[i].sprite;
+        _LevelItemList[i].starScore.fillAmount = data.Levels[i].starScoreAmount;
+        _LevelItemList[i].itemButton.interactable = data.Levels[i].isUnlocked;
         _LevelItemList[i].itemButton.onClick.RemoveAllListeners();
         _LevelItemList[i].itemButton.onClick.AddListener(() => SetLevel(i));
     }

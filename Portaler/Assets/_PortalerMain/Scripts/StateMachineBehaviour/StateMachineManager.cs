@@ -5,8 +5,13 @@ using UnityEngine;
 public class StateMachineManager : MonoBehaviour
 {
     public static StateMachineManager Instance;
-    public static Animator animator;
     const int _MachineLayer = 9;
+
+    public static Animator animator;
+    //public static ScriptableWeapon[] GetWeapon;
+    //public static ScriptableLevel[] GetLevel;
+    //[SerializeField] ScriptableWeapon[] _weapons;
+    //[SerializeField] ScriptableLevel[] _levels;
 
     void Awake()
     {
@@ -20,7 +25,8 @@ public class StateMachineManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(this);
-
+        //GetLevel = _levels;
+        //GetWeapon = _weapons;
         animator = GameObjectFindWithLayer.Find(_MachineLayer).GetComponent<Animator>();
     }
 

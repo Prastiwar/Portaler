@@ -5,7 +5,7 @@ using TMPro;
 
 public class ShopState : MonoBehaviour
 {
-    [SerializeField] ScriptableWeapon[] weapons;
+    [SerializeField] ScriptableData data;
     [SerializeField] Transform _ShopContent;
     [SerializeField] GameObject _GunItemPrefab;
     List<GunItem> _GunItemList = new List<GunItem>();
@@ -32,7 +32,7 @@ public class ShopState : MonoBehaviour
 
     public void SpawnShopItems()
     {
-        int _Length = weapons.Length;
+        int _Length = data.Weapons.Length;
         for (int i = 0; i < _Length; i++)
         {
             GameObject _GunItem = Instantiate(_GunItemPrefab, _ShopContent);
@@ -44,9 +44,9 @@ public class ShopState : MonoBehaviour
 
     void UpdateAllText(int i)
     {
-        _GunItemList[i].icon.sprite = weapons[i].sprite;
-        _GunItemList[i].ammoText.text = weapons[i].maxAmmo.ToString();
-        _GunItemList[i].distanceText.text = weapons[i].distance.ToString();
+        _GunItemList[i].icon.sprite = data.Weapons[i].sprite;
+        _GunItemList[i].ammoText.text = data.Weapons[i].maxAmmo.ToString();
+        _GunItemList[i].distanceText.text = data.Weapons[i].distance.ToString();
         UpdateButton(i);
     }
 
@@ -56,15 +56,15 @@ public class ShopState : MonoBehaviour
         string wearText = "Wear";
         string clothedText = "Clothed";
 
-        _GunItemList[i].priceText.text = weapons[i].isPurchased ? string.Empty : weapons[i].price.ToString();
+        _GunItemList[i].priceText.text = data.Weapons[i].isPurchased ? string.Empty : data.Weapons[i].price.ToString();
         _GunItemList[i].itemButton.onClick.RemoveAllListeners();
         _GunItemList[i].itemButton.onClick.AddListener(() => OnItemButtonClick(i));
-        _GunItemList[i].buttonText.text = GameState.weaponIndex == i ? clothedText : (weapons[i].isPurchased ? wearText : buyText);
+        _GunItemList[i].buttonText.text = GameState.weaponIndex == i ? clothedText : (data.Weapons[i].isPurchased ? wearText : buyText);
     }
 
     void OnItemButtonClick(int i)
     {
-        if (weapons[i].isPurchased)
+        if (data.Weapons[i].isPurchased)
             OnWear(i);
         else
             OnBuy(i);
@@ -72,10 +72,10 @@ public class ShopState : MonoBehaviour
 
     void OnBuy(int i)
     {
-        if (GameState._player.money >= weapons[i].price)
+        if (GameState._player.money >= data.Weapons[i].price)
         {
-            GameState._player.money -= weapons[i].price;
-            weapons[i].isPurchased = true;
+            GameState._player.money -= data.Weapons[i].price;
+            data.Weapons[i].isPurchased = true;
             OnWear(i);
         }
         else

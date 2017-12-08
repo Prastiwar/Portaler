@@ -270,8 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _LevelContent: {fileID: 1804013600}
-  levels:
-  - {fileID: 11400000, guid: 9e0c642ef35c0cf44b145ce9a6f5c63f, type: 2}
+  data: {fileID: 11400000, guid: eb4625ef96b65ee40a0bcc9681b7c137, type: 2}
   _LevelItemPrefab: {fileID: 1369016653483266, guid: e71eb4eab61b7c14bbd7d31c78409349,
     type: 2}
 --- !u!4 &393887933

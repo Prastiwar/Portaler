@@ -18,9 +18,8 @@ public class GameState : MonoBehaviour
     public static int lvlIndex = 0;
     public static int weaponIndex = 0;
 
-    [SerializeField] ScriptableWeapon[] weapon;
+    [SerializeField] ScriptableData data;
     [SerializeField] Transform firePoint;
-    [SerializeField] GameObject[] levels;
 
     static GameObject Portal_1;
     static GameObject Portal_2;
@@ -84,9 +83,9 @@ public class GameState : MonoBehaviour
             //GameObject _level = Instantiate(levels[lvlIndex]);
 
         _player.playerTransform = PlayerMotor.instance.player;
-        Portal_1 = Instantiate(weapon[weaponIndex].portal_1);
-        Portal_2 = Instantiate(weapon[weaponIndex].portal_2);
-        weapon[weaponIndex].ammo = weapon[weaponIndex].maxAmmo;
+        Portal_1 = Instantiate(data.Weapons[weaponIndex].portal_1);
+        Portal_2 = Instantiate(data.Weapons[weaponIndex].portal_2);
+        data.Weapons[weaponIndex].ammo = data.Weapons[weaponIndex].maxAmmo;
 
         Debug.Log("Level was instantied");
     }
@@ -99,8 +98,8 @@ public class GameState : MonoBehaviour
         Vector2 direction = (mouseWorld - firePoint.position).normalized;
         Debug.DrawRay(firePoint.position, direction * 100, Color.cyan, 1.3f);
 
-        RaycastHit2D hit2D = Physics2D.Raycast(firePoint.position, direction, weapon[weaponIndex].distance);
-        weapon[weaponIndex].ammo--;
+        RaycastHit2D hit2D = Physics2D.Raycast(firePoint.position, direction, data.Weapons[weaponIndex].distance);
+        data.Weapons[weaponIndex].ammo--;
 
         if (hit2D.collider != null)
         {
