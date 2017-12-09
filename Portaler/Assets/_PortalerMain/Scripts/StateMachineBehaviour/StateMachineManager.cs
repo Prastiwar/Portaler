@@ -8,6 +8,8 @@ public class StateMachineManager : MonoBehaviour
     const int _MachineLayer = 9;
 
     public static Animator animator;
+    public static ScriptableData data;
+    [SerializeField] ScriptableData _ScriptableData;
 
     void Awake()
     {
@@ -21,6 +23,7 @@ public class StateMachineManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(this);
+        data = _ScriptableData;
         animator = GameObjectFindWithLayer.Find(_MachineLayer).GetComponent<Animator>();
     }
 
@@ -33,7 +36,15 @@ public class StateMachineManager : MonoBehaviour
     // It's changing scene AND scene STATE
     public static void ChangeSceneTo(string _SceneName)
     {
-        Initiate.Fade(_SceneName, Color.black, 1.3f);
+        // higher value = faster
+        float dampIn = 0.2f;
+        float dampOut = 1.5f;
+        // higher value = bigger break = slower load
+        float breakLast = 1.35f;
+        // higher value = faster dampIn after break
+        float breakAcceleration = 0.8f;
+
+        Initiate.Fade(_SceneName, Color.black, dampIn, dampOut, true, breakLast, breakAcceleration);
     }
 
 }

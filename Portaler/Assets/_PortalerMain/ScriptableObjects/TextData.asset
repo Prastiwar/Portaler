@@ -14,6 +14,12 @@ MonoBehaviour:
   WinText:
   - You did it!
   - Ha! You won!
+  - Not bad!
+  - Well done!
+  - Wish I was you..
   LoseText:
-  - Oh my.. what a amateur..
+  - Oh my.. what an amateur..
   - You've been spotted!
+  - Terrible play..
+  - After I'm through beating you.
+  - You are loser!

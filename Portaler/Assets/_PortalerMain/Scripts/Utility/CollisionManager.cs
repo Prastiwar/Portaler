@@ -4,14 +4,39 @@ using UnityEngine;
 
 public class CollisionManager : MonoBehaviour
 {
+    enum ColliderItemType
+    {
+        Portal,
+        EndingDoor,
+        StealItem
+    }
+    [SerializeField] ColliderItemType colItemType;
+    [SerializeField] ScriptableStealItem stealItem;
     public bool isItFirstPortal;
-    [SerializeField] bool isPortal;
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (isPortal)
-            GameState.OnPortalEnter(other, gameObject);
-        else
-            GameState.GameOver(false);
+        switch (colItemType)
+        {
+            case ColliderItemType.Portal:
+                GameState.OnPortalEnter(other, gameObject);
+                break;
+
+            case ColliderItemType.EndingDoor:
+                if (other.gameObject.layer == 10)
+                    GameState.GameOver(false);
+                break;
+
+            case ColliderItemType.StealItem:
+                if (other.gameObject.layer == 10)
+                {
+                    GameState.GetStealItem(stealItem);
+                    gameObject.SetActive(false);
+                }
+                break;
+
+            default:
+                break;
+        }
     }
 }

@@ -7,6 +7,8 @@ public class ScriptableLevel : ScriptableObject
 {
     public bool isUnlocked;
     public GameObject levelPrefab;
+    public Transform startWaypoint;
+
     public Sprite sprite;
     public float starScoreAmount;
 }

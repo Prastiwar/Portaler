@@ -7,4 +7,6 @@ public class ScriptableTextData : ScriptableObject
 {
     public string[] WinText;
     public string[] LoseText;
+    public string[] sellDoneText;
+    public string[] sellFailureText;
 }

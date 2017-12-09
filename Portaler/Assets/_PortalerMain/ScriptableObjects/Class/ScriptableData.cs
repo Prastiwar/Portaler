@@ -8,4 +8,5 @@ public class ScriptableData : ScriptableObject
     public ScriptableWeapon[] Weapons;
     public ScriptableEnemy[] Enemies;
     public ScriptableLevel[] Levels;
+    public ScriptableStealItem[] StealItems;
 }

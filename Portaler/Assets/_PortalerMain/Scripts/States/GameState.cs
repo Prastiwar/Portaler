@@ -6,20 +6,22 @@ using UnityEngine;
 // All player statistics
 public struct Player
 {
-    //public Transform playerTransform;
+    public Transform playerTransform;
     public int money;
 }
 public class GameState : MonoBehaviour
 {
-    public static Player _player;
+    public static Player Player;
     public static int lvlIndex = 0;
     public static int weaponIndex = 0;
+    public static int itemIndex = -1;
     public static bool isSpotted = false;
 
     [SerializeField] ScriptableData data;
     [SerializeField] GameObject comingSoonScene;
     [SerializeField] Transform firePoint;
-    [SerializeField] Transform endColTransform;
+
+    GameObject[] _StealItems;
 
     static GameObject Portal_1;
     static GameObject Portal_2;
@@ -47,13 +49,43 @@ public class GameState : MonoBehaviour
 
     public void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        
     }
 
     public static void GameOver(bool _isSpotted)
     {
         isSpotted = _isSpotted;
         StateMachineManager.ChangeSceneTo("Result");
+    }
+
+    public static void GetStealItem(ScriptableStealItem _stealItem)
+    {
+        int _Length = StateMachineManager.data.StealItems.Length;
+        for (int i = 0; i < _Length; i++)
+        {
+            if (StateMachineManager.data.StealItems[i] = _stealItem)
+            {
+                itemIndex = i;
+                break;
+            }
+        }
+    }
+
+    // Instantiate level by index
+    void SetLevel()
+    {
+        //GameObject _level;
+        //if (data.Levels[lvlIndex] != null)
+        //    _level = Instantiate(comingSoonScene);
+        //else
+        //    _level = Instantiate(data.Levels[lvlIndex].levelPrefab);
+
+        isSpotted = false;
+        Player.playerTransform = PlayerMotor.instance.player;
+        //Player.playerTransform.position = data.Levels[lvlIndex].startWaypoint.position;
+        data.Weapons[weaponIndex].ammo = data.Weapons[weaponIndex].maxAmmo;
+        Portal_1 = Instantiate(data.Weapons[weaponIndex].portal_1);
+        Portal_2 = Instantiate(data.Weapons[weaponIndex].portal_2);
+
     }
 
     // What to do when player've went into portal
@@ -70,23 +102,6 @@ public class GameState : MonoBehaviour
             otherRigidBody.velocity = exitVelocity;
             other.transform.position = _otherPortal.transform.position + _otherPortal.transform.forward * 2; // throw away rigidbody from other portal
         }
-    }
-
-    // Instantiate level by index
-    void SetLevel()
-    {
-        //GameObject _level;
-        //if (data.Levels[lvlIndex] != null)
-        //    _level = Instantiate(comingSoonScene);
-        //else
-        //    _level = Instantiate(data.Levels[lvlIndex].levelPrefab);
-
-        //_player.playerTransform = PlayerMotor.instance.player;
-        isSpotted = false;
-        Portal_1 = Instantiate(data.Weapons[weaponIndex].portal_1);
-        Portal_2 = Instantiate(data.Weapons[weaponIndex].portal_2);
-        //endColTransform = .transform;
-        data.Weapons[weaponIndex].ammo = data.Weapons[weaponIndex].maxAmmo;
     }
 
     // Active and setting portal position on wall
