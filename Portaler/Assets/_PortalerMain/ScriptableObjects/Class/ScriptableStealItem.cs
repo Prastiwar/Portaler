@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable/StealItem", fileName = "New StealItem")]
 public class ScriptableStealItem : ScriptableObject
 {
-    public bool hasSteal;
     public Sprite image;
     public string nameItem;
     public int moneyValue;

@@ -62,7 +62,6 @@ public class ResultState : MonoBehaviour
         // Setting item popup
         if (GameState.itemIndex > -1)
         {
-            Debug.Log("?");
             GameObject _StealItem = Instantiate(_StealItemPopupPrefab, _ItemParent);
             StealItem _Item = _StealItem.GetComponent<StealItem>();
             UpdateItemText(_Item, _StealItem);
@@ -82,9 +81,11 @@ public class ResultState : MonoBehaviour
 
     void OnSell(GameObject _gameObject)
     {
-        bool random = false;
-        // udane?
-        SetPopup(random, _gameObject);
+        bool isDone = true;
+        int randBool = Random.Range(0,100);
+        isDone = (randBool > 0 && randBool < 50) ? true : false;
+
+        SetPopup(isDone, _gameObject);
     }
 
     void SetPopup(bool isDone, GameObject _gameObject)
@@ -93,10 +94,17 @@ public class ResultState : MonoBehaviour
         string decision;
         int doneText = Random.Range(0, textData.sellDoneText.Length);
         int failureText = Random.Range(0, textData.sellFailureText.Length);
-        decision = isDone ? textData.sellDoneText[doneText] : textData.sellFailureText[failureText];
 
+        decision = isDone ? textData.sellDoneText[doneText] : textData.sellFailureText[failureText];
         _popupDescription.text = decision;
         _popupOKButton.onClick.AddListener(()=> OnCancelButton(_gameObject));
+
+        if (isDone)
+            GameState.Player.money += data.StealItems[GameState.itemIndex].moneyValue;
+        else
+            GameState.Player.money -= Mathf.FloorToInt(data.StealItems[GameState.itemIndex].moneyValue * Random.Range(0.5f, 1f));
+
+        _MoneyBalanceText.text = GameState.Player.money.ToString();
     }
 
     void OnCancelButton(GameObject _gameObject)

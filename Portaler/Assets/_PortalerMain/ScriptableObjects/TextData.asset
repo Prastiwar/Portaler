@@ -23,3 +23,7 @@ MonoBehaviour:
   - Terrible play..
   - After I'm through beating you.
   - You are loser!
+  sellDoneText:
+  - You sold it, nice!
+  sellFailureText:
+  - Unfortunetely, police caught you, lost some money
