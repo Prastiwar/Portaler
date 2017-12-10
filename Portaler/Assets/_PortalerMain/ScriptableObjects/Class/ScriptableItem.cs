@@ -55,7 +55,11 @@ public class ScriptableItem : ScriptableObject
         }
     }
 
-    public void DeactiveItem()
+    public Image GetIcon(int index){ return iconList[index]; }
+    public TextMeshProUGUI GetText(int index){ return textList[index]; }
+    public Button GetButton(int index){ return buttonList[index]; }
+
+    public void DeactivAllItem()
     {
         _itemParent.SetActive(false);
     }

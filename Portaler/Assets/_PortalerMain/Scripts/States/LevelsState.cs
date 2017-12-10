@@ -6,12 +6,11 @@ public class LevelsState : MonoBehaviour
 {
     [SerializeField] Transform _LevelContent;
     [SerializeField] ScriptableData data;
-    [SerializeField] GameObject _LevelItemPrefab;
-    List<LevelItem> _LevelItemList = new List<LevelItem>();
-    
+    [SerializeField] ScriptableItem _LevelItem;
+
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        SpawnShopItems();
+        SpawnLeveltems();
     }
 
     public void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -29,27 +28,20 @@ public class LevelsState : MonoBehaviour
         StateMachineManager.ChangeSceneTo(_SceneName);
     }
 
-    void SpawnShopItems()
+    void SpawnLeveltems()
     {
-        //levelsData[.ScriptableLevels[0].
         int _Length = data.Levels.Length;
         for (int i = 0; i < _Length; i++)
         {
-            GameObject _LevelItem = Instantiate(_LevelItemPrefab, _LevelContent);
-            LevelItem _Item = _LevelItem.GetComponent<LevelItem>();
-            _LevelItemList.Add(_Item);
-            UpdateAllText(i);
-        }
-    }
+            var level = data.Levels[i];
+            _LevelItem.SpawnItem(_LevelContent);
 
-    void UpdateAllText(int i)
-    {
-        _LevelItemList[i].lockedIcon.gameObject.SetActive(!data.Levels[i].isUnlocked);
-        _LevelItemList[i].icon.sprite = data.Levels[i].sprite;
-        _LevelItemList[i].starScore.fillAmount = data.Levels[i].starScoreAmount;
-        _LevelItemList[i].itemButton.interactable = data.Levels[i].isUnlocked;
-        _LevelItemList[i].itemButton.onClick.RemoveAllListeners();
-        _LevelItemList[i].itemButton.onClick.AddListener(() => SetLevel(i));
+            _LevelItem.SetIcon(0, level.sprite);
+            _LevelItem.GetIcon(1).gameObject.SetActive(!level.isUnlocked);
+            _LevelItem.GetIcon(2).fillAmount = level.starScoreAmount;
+            _LevelItem.GetButton(0).interactable = level.isUnlocked;
+            _LevelItem.AddListenerOnButton(0, () => SetLevel(i), true);
+        }
     }
 
     void SetLevel(int lvlIndex)

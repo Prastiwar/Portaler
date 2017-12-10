@@ -86,8 +86,8 @@ public class ResultState : MonoBehaviour
 
     void OnCancelButton()
     {
-        _Popup.DeactiveItem();
-        _Item.DeactiveItem();
+        _Popup.DeactivAllItem();
+        _Item.DeactivAllItem();
     }
 
     void OnSell()

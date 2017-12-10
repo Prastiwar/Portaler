@@ -88,9 +88,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224186604326524490}
-  - component: {fileID: 114367795282903920}
   m_Layer: 5
-  m_Name: LevelItem
+  m_Name: LevelItemVisuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,21 +244,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114367795282903920
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1369016653483266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e1e0c77c6ff4064dbccca6216ceb624, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  icon: {fileID: 114106753293639964}
-  lockedIcon: {fileID: 114217312527377882}
-  starScore: {fileID: 114069077343073678}
-  itemButton: {fileID: 114042507089651978}
 --- !u!222 &222192748001413220
 CanvasRenderer:
   m_ObjectHideFlags: 1

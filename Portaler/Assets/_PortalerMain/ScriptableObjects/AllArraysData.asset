@@ -18,5 +18,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6a72bc6512f49f14d9b1b35d1c72f713, type: 2}
   Levels:
   - {fileID: 11400000, guid: 9e0c642ef35c0cf44b145ce9a6f5c63f, type: 2}
+  - {fileID: 11400000, guid: 9e0c642ef35c0cf44b145ce9a6f5c63f, type: 2}
+  - {fileID: 11400000, guid: 9e0c642ef35c0cf44b145ce9a6f5c63f, type: 2}
+  - {fileID: 11400000, guid: 9e0c642ef35c0cf44b145ce9a6f5c63f, type: 2}
+  - {fileID: 11400000, guid: 9e0c642ef35c0cf44b145ce9a6f5c63f, type: 2}
   StealItems:
   - {fileID: 11400000, guid: 430e6359d2d903a4eb841767a61343fe, type: 2}
