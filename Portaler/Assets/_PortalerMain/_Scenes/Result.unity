@@ -469,6 +469,7 @@ MonoBehaviour:
   _DecisionPopup: {fileID: 1701957398}
   _popupDescription: {fileID: 793912497}
   _popupOKButton: {fileID: 1733253525}
+  _ItemTest: {fileID: 11400000, guid: 5753201c37b83d847ab7e20397dca134, type: 2}
 --- !u!4 &393887933
 Transform:
   m_ObjectHideFlags: 0
@@ -2795,6 +2796,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1685142592}
   - component: {fileID: 1685142593}
+  - component: {fileID: 1685142594}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -2817,7 +2819,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0000005066395}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1685142593
@@ -2832,16 +2834,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 15
-    m_Right: 15
-    m_Top: 15
-    m_Bottom: 0
-  m_ChildAlignment: 0
+    m_Left: 30
+    m_Right: 0
+    m_Top: -160
+    m_Bottom: 115
+  m_ChildAlignment: 4
   m_Spacing: 20
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+--- !u!114 &1685142594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1685142591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1 &1701957398
 GameObject:
   m_ObjectHideFlags: 0

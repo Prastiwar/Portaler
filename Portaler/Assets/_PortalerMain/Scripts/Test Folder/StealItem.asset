@@ -11,6 +11,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc64f130a7d97104bbc360b1f3b96cbf, type: 3}
   m_Name: StealItem
   m_EditorClassIdentifier: 
+  itemContent: {fileID: 1923875849426822, guid: 11ff0d1a74ce9244f8d9b722a8453c2f,
+    type: 2}
   icons:
   - {fileID: 114817894670625830, guid: 5110cd81075df1a42b2119bb52f5100c, type: 2}
   texts:

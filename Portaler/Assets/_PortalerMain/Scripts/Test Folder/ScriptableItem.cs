@@ -8,6 +8,8 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "Scriptable/Item", fileName = "New Item")]
 public class ScriptableItem : ScriptableObject
 {
+    public GameObject _itemContent;
+    [Header("Item Visuals")]
     public Image[] icons;
     public TextMeshProUGUI[] texts;
     public Button[] buttons;
@@ -29,19 +31,25 @@ public class ScriptableItem : ScriptableObject
         buttons[index].onClick.AddListener(() => method());
     }
 
-    public void SpawnItem(Transform _Parent)
+    public void SpawnItem(Transform _parent)
     {
-        for (int i = 0; i < icons.Length; i++)
+        GameObject itemContent = Instantiate(_itemContent, _parent);
+        Transform _Parent = itemContent.transform;
+
+        // Check what array is highest, set it to for _Length
+        int _textsLength = texts.Length;
+        int _buttonsLength = buttons.Length;
+        int _iconsLength = icons.Length;
+        int _Length = Mathf.Max(_textsLength, Mathf.Max(_buttonsLength, _iconsLength));
+
+        for (int i = 0; i < _Length; i++)
         {
-            Instantiate(icons[i], _Parent);
-        }
-        for (int i = 0; i < texts.Length; i++)
-        {
-            Instantiate(texts[i], _Parent);
-        }
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            Instantiate(buttons[i], _Parent);
+            if(i < _iconsLength)
+                Instantiate(icons[i], _Parent);
+            if (i < _textsLength)
+                Instantiate(texts[i], _Parent);
+            if (i < _buttonsLength)
+                Instantiate(buttons[i], _Parent);
         }
     }
 }

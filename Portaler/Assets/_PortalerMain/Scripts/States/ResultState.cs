@@ -27,7 +27,7 @@ public class ResultState : MonoBehaviour
     [SerializeField] Button _popupOKButton;
 
     // Test region
-    [SerializeField] ScriptableItem _ItemTest;
+    [SerializeField] ScriptableItem _Item;
 
     bool hasLose = GameState.isSpotted;
 
@@ -82,26 +82,26 @@ public class ResultState : MonoBehaviour
     void CreateItemTest()
     {
         int i = GameState.itemIndex;
-        var item = _ItemTest;
-        item.SpawnItem(_ItemParent);
-        item.SetIcon(0, data.StealItems[i].image);
-        item.SetText(0, data.StealItems[i].nameItem);
-        item.SetText(0, data.StealItems[i].moneyValue.ToString());
-        item.SetText(0, data.StealItems[i].description);
-        item.AddListenerOnButton(0, ()=> OnSell(_ItemParent.gameObject), false);
-        item.AddListenerOnButton(1, ()=> OnCancelButton(_ItemParent.gameObject), false);
+        var _Item = _Item;
+        _Item.SetIcon(0, data.StealItems[i].image);
+        _Item.SetText(0, data.StealItems[i].nameItem);
+        _Item.SetText(1, data.StealItems[i].moneyValue.ToString());
+        _Item.SetText(2, data.StealItems[i].description);
+        _Item.AddListenerOnButton(0, ()=> OnSell(_ItemParent.gameObject), false);
+        _Item.AddListenerOnButton(1, ()=> OnCancelButton(_ItemParent.gameObject), false);
+        _Item.SpawnItem(_ItemParent);
     }
 
-    void UpdateItemText(StealItem _Item, GameObject _gameObject)
-    {
-        int i = GameState.itemIndex;
-        _Item.icon.sprite = data.StealItems[i].image;
-        _Item.nameText.text = data.StealItems[i].nameItem;
-        _Item.moneyValueText.text = data.StealItems[i].moneyValue.ToString();
-        _Item.descriptionText.text = data.StealItems[i].description;
-        _Item.sellButton.onClick.AddListener(()=> OnSell(_gameObject));
-        _Item.leaveButton.onClick.AddListener(()=> OnCancelButton(_gameObject));
-    }
+    //void UpdateItemText(StealItem _Item, GameObject _gameObject)
+    //{
+    //    int i = GameState.itemIndex;
+    //    _Item.icon.sprite = data.StealItems[i].image;
+    //    _Item.nameText.text = data.StealItems[i].nameItem;
+    //    _Item.moneyValueText.text = data.StealItems[i].moneyValue.ToString();
+    //    _Item.descriptionText.text = data.StealItems[i].description;
+    //    _Item.sellButton.onClick.AddListener(()=> OnSell(_gameObject));
+    //    _Item.leaveButton.onClick.AddListener(()=> OnCancelButton(_gameObject));
+    //}
 
     void OnSell(GameObject _gameObject)
     {
