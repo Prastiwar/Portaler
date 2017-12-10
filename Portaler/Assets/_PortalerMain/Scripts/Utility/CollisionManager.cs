@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class CollisionManager : MonoBehaviour
 {
-    enum ColliderItemType
+    public enum ColliderItemType
     {
         Portal,
         EndingDoor,
         StealItem
     }
-    [SerializeField] ColliderItemType colItemType;
-    [SerializeField] ScriptableStealItem stealItem;
-    public bool isItFirstPortal;
+    public ColliderItemType colItemType;
+    [HideInInspector] public ScriptableStealItem stealItem;
+    [HideInInspector] public bool isItFirstPortal;
 
     void OnTriggerEnter2D(Collider2D other)
     {

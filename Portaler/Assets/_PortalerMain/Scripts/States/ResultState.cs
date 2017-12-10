@@ -26,6 +26,9 @@ public class ResultState : MonoBehaviour
     [SerializeField] TextMeshProUGUI _popupDescription;
     [SerializeField] Button _popupOKButton;
 
+    // Test region
+    [SerializeField] ScriptableItem _ItemTest;
+
     bool hasLose = GameState.isSpotted;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -58,14 +61,35 @@ public class ResultState : MonoBehaviour
         SetTexts();
 
         SetLevelDataInfo();
-        
+
         // Setting item popup
-        if (GameState.itemIndex > -1)
+        if (GameState.itemIndex > -1 && !hasLose)
         {
-            GameObject _StealItem = Instantiate(_StealItemPopupPrefab, _ItemParent);
-            StealItem _Item = _StealItem.GetComponent<StealItem>();
-            UpdateItemText(_Item, _StealItem);
+            //GameObject _StealItem = Instantiate(_StealItemPopupPrefab, _ItemParent);
+            //StealItem _Item = _StealItem.GetComponent<StealItem>();
+            //UpdateItemText(_Item, _StealItem);
+
+            //Test region
+            CreateItemTest();
         }
+        else if(GameState.itemIndex > -1 && hasLose)
+        {
+            //always get fee => SetPopup(false, null);
+        }
+    }
+
+    // Test void
+    void CreateItemTest()
+    {
+        int i = GameState.itemIndex;
+        var item = _ItemTest;
+        item.SpawnItem(_ItemParent);
+        item.SetIcon(0, data.StealItems[i].image);
+        item.SetText(0, data.StealItems[i].nameItem);
+        item.SetText(0, data.StealItems[i].moneyValue.ToString());
+        item.SetText(0, data.StealItems[i].description);
+        item.AddListenerOnButton(0, ()=> OnSell(_ItemParent.gameObject), false);
+        item.AddListenerOnButton(1, ()=> OnCancelButton(_ItemParent.gameObject), false);
     }
 
     void UpdateItemText(StealItem _Item, GameObject _gameObject)
@@ -140,6 +164,10 @@ public class ResultState : MonoBehaviour
 
     float CalculateScore()
     {
+        if (hasLose)
+            return 0;
+        // im mniej wystrzelisz - tym lepszy wynik, 100% jest niemożliwe.. 
+
         int i = GameState.weaponIndex;
         float result = data.Weapons[i].ammo / data.Weapons[i].maxAmmo;
         return result;

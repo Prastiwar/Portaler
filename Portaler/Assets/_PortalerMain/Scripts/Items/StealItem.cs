@@ -10,4 +10,5 @@ public class StealItem : MonoBehaviour
     public TextMeshProUGUI descriptionText;
     public Button sellButton;
     public Button leaveButton;
+
 }
