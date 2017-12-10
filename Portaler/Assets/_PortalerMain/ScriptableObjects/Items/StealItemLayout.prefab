@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224933548400305818}
   - component: {fileID: 114027973764261744}
   m_Layer: 0
-  m_Name: StealItemLayoutItem
+  m_Name: StealItemLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

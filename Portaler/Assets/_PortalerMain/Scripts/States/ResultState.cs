@@ -22,10 +22,8 @@ public class ResultState : MonoBehaviour
     
     [SerializeField] Transform _ItemParent;
     [SerializeField] ScriptableItem _Item;
-
-    [SerializeField] GameObject _DecisionPopup;
-    [SerializeField] TextMeshProUGUI _popupDescription;
-    [SerializeField] Button _popupOKButton;
+    [SerializeField] Transform _PopupParent;
+    [SerializeField] ScriptableItem _Popup;
 
 
     bool hasLose = GameState.isSpotted;
@@ -82,29 +80,35 @@ public class ResultState : MonoBehaviour
         _Item.SetText(0, stealItem.nameItem);
         _Item.SetText(1, stealItem.moneyValue.ToString());
         _Item.SetText(2, stealItem.description);
-        _Item.AddListenerOnButton(0, () => OnSell(_ItemParent.gameObject), true);
-        _Item.AddListenerOnButton(1, () => OnCancelButton(_ItemParent.gameObject), true);
+        _Item.AddListenerOnButton(0, () => OnSell());
+        _Item.AddListenerOnButton(1, () => OnCancelButton());
     }
 
-    void OnSell(GameObject _gameObject)
+    void OnCancelButton()
+    {
+        _Popup.DeactiveItem();
+        _Item.DeactiveItem();
+    }
+
+    void OnSell()
     {
         bool isDone = true;
         int randBool = Random.Range(0,100);
         isDone = (randBool > 0 && randBool < 50) ? true : false;
 
-        SetPopup(isDone, _gameObject);
+        SetPopup(isDone);
     }
 
-    void SetPopup(bool isDone, GameObject _gameObject)
+    void SetPopup(bool isDone)
     {
-        _DecisionPopup.SetActive(true);
         string decision;
         int doneText = Random.Range(0, textData.sellDoneText.Length);
         int failureText = Random.Range(0, textData.sellFailureText.Length);
-
         decision = isDone ? textData.sellDoneText[doneText] : textData.sellFailureText[failureText];
-        _popupDescription.text = decision;
-        _popupOKButton.onClick.AddListener(()=> OnCancelButton(_gameObject));
+
+        _Popup.SpawnItem(_PopupParent);
+        _Popup.SetText(0, decision);
+        _Popup.AddListenerOnButton(0, ()=> OnCancelButton());
 
         if (isDone)
             GameState.Player.money += data.StealItems[GameState.itemIndex].moneyValue;
@@ -112,12 +116,6 @@ public class ResultState : MonoBehaviour
             GameState.Player.money -= Mathf.FloorToInt(data.StealItems[GameState.itemIndex].moneyValue * Random.Range(0.5f, 1f));
 
         _MoneyBalanceText.text = GameState.Player.money.ToString();
-    }
-
-    void OnCancelButton(GameObject _gameObject)
-    {
-        _DecisionPopup.SetActive(false);
-        _gameObject.SetActive(false);
     }
 
     void SetLevelDataInfo()
