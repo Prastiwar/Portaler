@@ -9,10 +9,11 @@ using UnityEngine.Events;
 public class ScriptableItem : ScriptableObject
 {
     public GameObject _itemContent;
-    [Header("Item Visuals")]
     public Image[] icons;
     public TextMeshProUGUI[] texts;
     public Button[] buttons;
+
+    List<Button> buttonList = new List<Button>();
 
     public void SetIcon(int index, Sprite _sprite)
     {
@@ -27,8 +28,8 @@ public class ScriptableItem : ScriptableObject
     public void AddListenerOnButton(int index, UnityAction method, bool removeAll)
     {
         if(removeAll)
-            buttons[index].onClick.RemoveAllListeners();
-        buttons[index].onClick.AddListener(() => method());
+            buttonList[index].onClick.RemoveAllListeners();
+        buttonList[index].onClick.AddListener(() => method());
     }
 
     public void SpawnItem(Transform _parent)
@@ -41,7 +42,7 @@ public class ScriptableItem : ScriptableObject
         int _buttonsLength = buttons.Length;
         int _iconsLength = icons.Length;
         int _Length = Mathf.Max(_textsLength, Mathf.Max(_buttonsLength, _iconsLength));
-
+        
         for (int i = 0; i < _Length; i++)
         {
             if(i < _iconsLength)
@@ -49,7 +50,7 @@ public class ScriptableItem : ScriptableObject
             if (i < _textsLength)
                 Instantiate(texts[i], _Parent);
             if (i < _buttonsLength)
-                Instantiate(buttons[i], _Parent);
+                buttonList.Add(Instantiate(buttons[i], _Parent));
         }
     }
 }

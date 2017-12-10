@@ -463,13 +463,11 @@ MonoBehaviour:
   _StarScoreText: {fileID: 1430858428}
   data: {fileID: 11400000, guid: eb4625ef96b65ee40a0bcc9681b7c137, type: 2}
   textData: {fileID: 11400000, guid: 4eb18c6c19b34a444ba2d41e0fbe846c, type: 2}
-  _StealItemPopupPrefab: {fileID: 1460098556527536, guid: 78f34ad62852ec24c936a9a874a8861f,
-    type: 2}
   _ItemParent: {fileID: 1685142592}
+  _Item: {fileID: 11400000, guid: 5753201c37b83d847ab7e20397dca134, type: 2}
   _DecisionPopup: {fileID: 1701957398}
   _popupDescription: {fileID: 793912497}
   _popupOKButton: {fileID: 1733253525}
-  _ItemTest: {fileID: 11400000, guid: 5753201c37b83d847ab7e20397dca134, type: 2}
 --- !u!4 &393887933
 Transform:
   m_ObjectHideFlags: 0
