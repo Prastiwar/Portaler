@@ -48,7 +48,7 @@ public class LevelsState : MonoBehaviour
 
     void SetLevel(int lvlIndex)
     {
-        GameState.lvlIndex = lvlIndex;
+        GameState.player.lvlIndex = lvlIndex;
         _stateManager.ChangeSceneTo("Game");
     }
 

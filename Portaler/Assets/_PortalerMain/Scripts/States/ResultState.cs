@@ -25,10 +25,10 @@ public class ResultState : MonoBehaviour
     [SerializeField] Transform _PopupParent;
     [SerializeField] ScriptableItem _Popup;
     StateMachineManager _stateManager;
-    int itemIndex = GameState.itemIndex;
-    int weaponIndex = GameState.weaponIndex;
-    int lvlIndex = GameState.lvlIndex;
-    bool hasLose = GameState.isSpotted;
+    int itemIndex = GameState.player.itemIndex;
+    int weaponIndex = GameState.player.weaponIndex;
+    int lvlIndex = GameState.player.lvlIndex;
+    bool hasLose = GameState.player.isSpotted;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
@@ -113,11 +113,11 @@ public class ResultState : MonoBehaviour
         _Popup.AddListenerOnButton(0, ()=> OnCancelButton());
 
         if (isDone)
-            GameState.Player.money += data.StealItems[itemIndex].moneyValue;
+            GameState.player.money += data.StealItems[itemIndex].moneyValue;
         else
-            GameState.Player.money -= Mathf.FloorToInt(data.StealItems[itemIndex].moneyValue * Random.Range(0.5f, 1f));
+            GameState.player.money -= Mathf.FloorToInt(data.StealItems[itemIndex].moneyValue * Random.Range(0.5f, 1f));
 
-        _MoneyBalanceText.text = GameState.Player.money.ToString();
+        _MoneyBalanceText.text = GameState.player.money.ToString();
     }
 
     void SetLevelDataInfo()
@@ -139,7 +139,7 @@ public class ResultState : MonoBehaviour
 
         _ToLevelButtonText.text = hasLose ? retryText : nextLevelText;
         _HeaderText.text = hasLose ? loseText : winText;
-        _MoneyBalanceText.text = GameState.Player.money.ToString();
+        _MoneyBalanceText.text = GameState.player.money.ToString();
         _StarScoreImage.fillAmount = CalculateScore();
         _StarScoreText.text = (CalculateScore() * 100).ToString();
     }
@@ -159,7 +159,7 @@ public class ResultState : MonoBehaviour
     public void OnLevelButton()
     {
         if (!hasLose)
-            GameState.lvlIndex += 1;
+            GameState.player.lvlIndex += 1;
 
         _stateManager.ChangeSceneTo("Game");
     }

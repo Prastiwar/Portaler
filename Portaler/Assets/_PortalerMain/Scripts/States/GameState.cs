@@ -4,21 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // All player statistics
+[Serializable]
 public struct Player
 {
-    public Transform playerTransform;
     public int money;
+    public int lvlIndex;
+    public int weaponIndex;
+    public int itemIndex;
+    public bool isSpotted;
 }
 public class GameState : MonoBehaviour
 {
     static StateMachineManager _stateManager;
-    public static Player Player;
-    public static int lvlIndex = 0;
-    public static int weaponIndex = 0;
-    public static int itemIndex = -1;
-    public static bool isSpotted = false;
-
-    //[SerializeField] ScriptableData data;
+    [SerializeField] public static Player player;
     [SerializeField] GameObject comingSoonScene;
     [SerializeField] Transform firePoint;
 
@@ -54,7 +52,7 @@ public class GameState : MonoBehaviour
 
     public static void GameOver(bool _isSpotted)
     {
-        isSpotted = _isSpotted;
+        player.isSpotted = _isSpotted;
         _stateManager.ChangeSceneTo("Result");
     }
 
@@ -65,7 +63,7 @@ public class GameState : MonoBehaviour
         {
             if (_stateManager.data.StealItems[i] = _stealItem)
             {
-                itemIndex = i;
+                player.itemIndex = i;
                 break;
             }
         }
@@ -80,12 +78,12 @@ public class GameState : MonoBehaviour
         //else
         //    _level = Instantiate(data.Levels[lvlIndex].levelPrefab);
 
-        isSpotted = false;
-        Player.playerTransform = PlayerMotor.instance.player;
+        player.itemIndex = -1;
+        player.isSpotted = false;
         //Player.playerTransform.position = data.Levels[lvlIndex].startWaypoint.position;
-        StateMachineManager.Instance.data.Weapons[weaponIndex].ammo = _stateManager.data.Weapons[weaponIndex].maxAmmo;
-        Portal_1 = Instantiate(_stateManager.data.Weapons[weaponIndex].portal_1);
-        Portal_2 = Instantiate(_stateManager.data.Weapons[weaponIndex].portal_2);
+        StateMachineManager.Instance.data.Weapons[player.weaponIndex].ammo = _stateManager.data.Weapons[player.weaponIndex].maxAmmo;
+        Portal_1 = Instantiate(_stateManager.data.Weapons[player.weaponIndex].portal_1);
+        Portal_2 = Instantiate(_stateManager.data.Weapons[player.weaponIndex].portal_2);
 
     }
 
@@ -113,8 +111,8 @@ public class GameState : MonoBehaviour
         Vector2 direction = (mouseWorld - firePoint.position).normalized;
         Debug.DrawRay(firePoint.position, direction * 100, Color.cyan, 1.3f);
 
-        RaycastHit2D hit2D = Physics2D.Raycast(firePoint.position, direction, _stateManager.data.Weapons[weaponIndex].distance);
-        _stateManager.data.Weapons[weaponIndex].ammo--;
+        RaycastHit2D hit2D = Physics2D.Raycast(firePoint.position, direction, _stateManager.data.Weapons[player.weaponIndex].distance);
+        _stateManager.data.Weapons[player.weaponIndex].ammo--;
 
         if (hit2D.collider != null)
         {

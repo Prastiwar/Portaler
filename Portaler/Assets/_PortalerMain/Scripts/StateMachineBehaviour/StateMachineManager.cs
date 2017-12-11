@@ -22,6 +22,7 @@ public class StateMachineManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(this);
+        SaveLoad.Load();
     }
 
     // It's changing state
@@ -42,6 +43,15 @@ public class StateMachineManager : MonoBehaviour
         float breakAcceleration = 0.8f;
 
         Initiate.Fade(_SceneName, Color.black, dampIn, dampOut, true, breakLast, breakAcceleration);
+    }
+
+    void OnApplicationPause(bool pause)
+    {
+        SaveLoad.Save();
+    }
+    void OnApplicationQuit()
+    {
+        SaveLoad.Save();
     }
 
 }

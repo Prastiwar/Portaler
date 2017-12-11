@@ -16,7 +16,7 @@ public class EnemyStateBehaviour : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (GameState.isSpotted)
+        if (GameState.player.isSpotted)
             return;
 
         EnemySigh();
