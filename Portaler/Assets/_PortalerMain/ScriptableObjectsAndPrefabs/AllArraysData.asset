@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32030bf848d893748a4123c7f2db1833, type: 3}
+  m_Name: AllArraysData
+  m_EditorClassIdentifier: 
+  Weapons:
+  - {fileID: 11400000, guid: 8a4b9abea0e6f6643850171a727256ca, type: 2}
+  - {fileID: 11400000, guid: 38d28498422d04d4da14890cc1217743, type: 2}
+  Enemies:
+  - {fileID: 11400000, guid: 6a72bc6512f49f14d9b1b35d1c72f713, type: 2}
+  Levels:
+  - {fileID: 11400000, guid: 9e0c642ef35c0cf44b145ce9a6f5c63f, type: 2}
+  StealItems:
+  - {fileID: 11400000, guid: 430e6359d2d903a4eb841767a61343fe, type: 2}

@@ -11,13 +11,14 @@ public struct Player
 }
 public class GameState : MonoBehaviour
 {
+    static StateMachineManager _stateManager;
     public static Player Player;
     public static int lvlIndex = 0;
     public static int weaponIndex = 0;
     public static int itemIndex = -1;
     public static bool isSpotted = false;
 
-    [SerializeField] ScriptableData data;
+    //[SerializeField] ScriptableData data;
     [SerializeField] GameObject comingSoonScene;
     [SerializeField] Transform firePoint;
 
@@ -31,7 +32,7 @@ public class GameState : MonoBehaviour
         string _PauseState = "Pause State";
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(_PauseState))
             return;
-
+        _stateManager = StateMachineManager.Instance;
         SetLevel();
     }
 
@@ -54,15 +55,15 @@ public class GameState : MonoBehaviour
     public static void GameOver(bool _isSpotted)
     {
         isSpotted = _isSpotted;
-        StateMachineManager.ChangeSceneTo("Result");
+        _stateManager.ChangeSceneTo("Result");
     }
 
     public static void GetStealItem(ScriptableStealItem _stealItem)
     {
-        int _Length = StateMachineManager.data.StealItems.Length;
+        int _Length = _stateManager.data.StealItems.Length;
         for (int i = 0; i < _Length; i++)
         {
-            if (StateMachineManager.data.StealItems[i] = _stealItem)
+            if (_stateManager.data.StealItems[i] = _stealItem)
             {
                 itemIndex = i;
                 break;
@@ -82,9 +83,9 @@ public class GameState : MonoBehaviour
         isSpotted = false;
         Player.playerTransform = PlayerMotor.instance.player;
         //Player.playerTransform.position = data.Levels[lvlIndex].startWaypoint.position;
-        data.Weapons[weaponIndex].ammo = data.Weapons[weaponIndex].maxAmmo;
-        Portal_1 = Instantiate(data.Weapons[weaponIndex].portal_1);
-        Portal_2 = Instantiate(data.Weapons[weaponIndex].portal_2);
+        StateMachineManager.Instance.data.Weapons[weaponIndex].ammo = _stateManager.data.Weapons[weaponIndex].maxAmmo;
+        Portal_1 = Instantiate(_stateManager.data.Weapons[weaponIndex].portal_1);
+        Portal_2 = Instantiate(_stateManager.data.Weapons[weaponIndex].portal_2);
 
     }
 
@@ -112,8 +113,8 @@ public class GameState : MonoBehaviour
         Vector2 direction = (mouseWorld - firePoint.position).normalized;
         Debug.DrawRay(firePoint.position, direction * 100, Color.cyan, 1.3f);
 
-        RaycastHit2D hit2D = Physics2D.Raycast(firePoint.position, direction, data.Weapons[weaponIndex].distance);
-        data.Weapons[weaponIndex].ammo--;
+        RaycastHit2D hit2D = Physics2D.Raycast(firePoint.position, direction, _stateManager.data.Weapons[weaponIndex].distance);
+        _stateManager.data.Weapons[weaponIndex].ammo--;
 
         if (hit2D.collider != null)
         {

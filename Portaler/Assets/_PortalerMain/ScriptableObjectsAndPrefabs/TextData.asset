@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c081d3000c18a5408f03f4ea7c6f105, type: 3}
+  m_Name: TextData
+  m_EditorClassIdentifier: 
+  WinText:
+  - You did it!
+  - Ha! You won!
+  - Not bad!
+  - Well done!
+  - Wish I was you..
+  LoseText:
+  - Oh my.. what an amateur..
+  - You've been spotted!
+  - Terrible play..
+  - After I'm through beating you.
+  - You are loser!
+  sellDoneText:
+  - You sold it, nice!
+  sellFailureText:
+  - Unfortunetely, police caught you, lost some money

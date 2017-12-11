@@ -327,8 +327,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: eb4625ef96b65ee40a0bcc9681b7c137, type: 2}
   _ShopContent: {fileID: 358558931}
-  _GunItemPrefab: {fileID: 1428652643382440, guid: 5d4f3aece9de6cb459f98114ecc30235,
-    type: 2}
+  _ShopItem: {fileID: 11400000, guid: 7c5b860fb7257e24fb6628256d11f3f2, type: 2}
 --- !u!4 &393887933
 Transform:
   m_ObjectHideFlags: 0

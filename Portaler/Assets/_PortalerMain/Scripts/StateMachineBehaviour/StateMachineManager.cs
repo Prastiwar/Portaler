@@ -7,9 +7,8 @@ public class StateMachineManager : MonoBehaviour
     public static StateMachineManager Instance;
     const int _MachineLayer = 9;
 
-    public static Animator animator;
-    public static ScriptableData data;
-    [SerializeField] ScriptableData _ScriptableData;
+    public Animator animator;
+    public ScriptableData data;
 
     void Awake()
     {
@@ -23,18 +22,16 @@ public class StateMachineManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(this);
-        data = _ScriptableData;
-        animator = GameObjectFindWithLayer.Find(_MachineLayer).GetComponent<Animator>();
     }
 
     // It's changing state
-    public static void ChangeStateTo(string _StateName)
+    public void ChangeStateTo(string _StateName)
     {
         animator.SetTrigger(_StateName);
     }
 
     // It's changing scene AND scene STATE
-    public static void ChangeSceneTo(string _SceneName)
+    public void ChangeSceneTo(string _SceneName)
     {
         // higher value = faster
         float dampIn = 0.2f;

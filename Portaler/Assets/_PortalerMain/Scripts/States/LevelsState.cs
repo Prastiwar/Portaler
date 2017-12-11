@@ -7,9 +7,11 @@ public class LevelsState : MonoBehaviour
     [SerializeField] Transform _LevelContent;
     [SerializeField] ScriptableData data;
     [SerializeField] ScriptableItem _LevelItem;
+    StateMachineManager _stateManager;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        _stateManager = StateMachineManager.Instance;
         SpawnLeveltems();
     }
 
@@ -25,7 +27,7 @@ public class LevelsState : MonoBehaviour
 
     public void OnChangeSceneButton(string _SceneName)
     {
-        StateMachineManager.ChangeSceneTo(_SceneName);
+        _stateManager.ChangeSceneTo(_SceneName);
     }
 
     void SpawnLeveltems()
@@ -47,7 +49,7 @@ public class LevelsState : MonoBehaviour
     void SetLevel(int lvlIndex)
     {
         GameState.lvlIndex = lvlIndex;
-        StateMachineManager.ChangeSceneTo("Game");
+        _stateManager.ChangeSceneTo("Game");
     }
 
 }

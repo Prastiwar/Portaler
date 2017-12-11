@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class MenuState : MonoBehaviour
 {
+    StateMachineManager _stateManager;
+
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-
+        _stateManager = StateMachineManager.Instance;
     }
 
     public void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -21,7 +23,7 @@ public class MenuState : MonoBehaviour
 
     public void OnChangeSceneButton(string _SceneName)
     {
-        StateMachineManager.ChangeSceneTo(_SceneName);
+        _stateManager.ChangeSceneTo(_SceneName);
     }
 
 }

@@ -24,12 +24,15 @@ public class ResultState : MonoBehaviour
     [SerializeField] ScriptableItem _Item;
     [SerializeField] Transform _PopupParent;
     [SerializeField] ScriptableItem _Popup;
-
-
+    StateMachineManager _stateManager;
+    int itemIndex = GameState.itemIndex;
+    int weaponIndex = GameState.weaponIndex;
+    int lvlIndex = GameState.lvlIndex;
     bool hasLose = GameState.isSpotted;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        _stateManager = StateMachineManager.Instance;
         SetResultScreen();
     }
 
@@ -45,7 +48,7 @@ public class ResultState : MonoBehaviour
 
     public void OnChangeSceneButton(string _SceneName)
     {
-        StateMachineManager.ChangeSceneTo(_SceneName);
+        _stateManager.ChangeSceneTo(_SceneName);
     }
 
     void SetResultScreen()
@@ -60,11 +63,11 @@ public class ResultState : MonoBehaviour
         SetLevelDataInfo();
 
         // Setting item popup
-        if (GameState.itemIndex > -1 && !hasLose)
+        if (itemIndex > -1 && !hasLose)
         {
             CreateItem();
         }
-        else if(GameState.itemIndex > -1 && hasLose)
+        else if(itemIndex > -1 && hasLose)
         {
             //always get fee => SetPopup(false, null);
         }
@@ -72,8 +75,7 @@ public class ResultState : MonoBehaviour
     
     void CreateItem()
     {
-        int i = GameState.itemIndex;
-        var stealItem = data.StealItems[i];
+        var stealItem = data.StealItems[itemIndex];
 
         _Item.SpawnItem(_ItemParent);
         _Item.SetIcon(0, stealItem.image);
@@ -111,20 +113,19 @@ public class ResultState : MonoBehaviour
         _Popup.AddListenerOnButton(0, ()=> OnCancelButton());
 
         if (isDone)
-            GameState.Player.money += data.StealItems[GameState.itemIndex].moneyValue;
+            GameState.Player.money += data.StealItems[itemIndex].moneyValue;
         else
-            GameState.Player.money -= Mathf.FloorToInt(data.StealItems[GameState.itemIndex].moneyValue * Random.Range(0.5f, 1f));
+            GameState.Player.money -= Mathf.FloorToInt(data.StealItems[itemIndex].moneyValue * Random.Range(0.5f, 1f));
 
         _MoneyBalanceText.text = GameState.Player.money.ToString();
     }
 
     void SetLevelDataInfo()
     {
-        int i = GameState.lvlIndex;
         int _Length = data.Levels.Length;
-        data.Levels[i].starScoreAmount = CalculateScore();
-        if ((i + 1) < _Length) // Check if next level exist
-            data.Levels[i + 1].isUnlocked = true;
+        data.Levels[lvlIndex].starScoreAmount = CalculateScore();
+        if ((lvlIndex + 1) < _Length) // Check if next level exist
+            data.Levels[lvlIndex + 1].isUnlocked = true;
     }
 
     void SetTexts()
@@ -148,9 +149,8 @@ public class ResultState : MonoBehaviour
         if (hasLose)
             return 0;
         // im mniej wystrzelisz - tym lepszy wynik, 100% jest niemożliwe.. 
-
-        int i = GameState.weaponIndex;
-        float result = data.Weapons[i].ammo / data.Weapons[i].maxAmmo;
+        
+        float result = data.Weapons[weaponIndex].ammo / data.Weapons[weaponIndex].maxAmmo;
         return result;
     }
 
@@ -159,7 +159,7 @@ public class ResultState : MonoBehaviour
         if (!hasLose)
             GameState.lvlIndex += 1;
 
-        StateMachineManager.ChangeSceneTo("Game");
+        _stateManager.ChangeSceneTo("Game");
     }
 
 }

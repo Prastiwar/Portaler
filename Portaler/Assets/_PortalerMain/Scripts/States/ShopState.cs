@@ -5,13 +5,14 @@ using TMPro;
 
 public class ShopState : MonoBehaviour
 {
-    //[SerializeField] ScriptableData data;
+    [SerializeField] ScriptableData data;
     [SerializeField] Transform _ShopContent;
-    [SerializeField] GameObject _GunItemPrefab;
-    List<GunItem> _GunItemList = new List<GunItem>();
+    [SerializeField] ScriptableItem _ShopItem;
+    StateMachineManager _stateManager;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        _stateManager = StateMachineManager.Instance;
         SpawnShopItems();
     }
 
@@ -27,27 +28,20 @@ public class ShopState : MonoBehaviour
 
     public void OnChangeSceneButton(string _SceneName)
     {
-        StateMachineManager.ChangeSceneTo(_SceneName);
+        _stateManager.ChangeSceneTo(_SceneName);
     }
 
-    public void SpawnShopItems()
+    void SpawnShopItems()
     {
-        int _Length = StateMachineManager.data.Weapons.Length;
+        int _Length = _stateManager.data.Weapons.Length;
         for (int i = 0; i < _Length; i++)
         {
-            GameObject _GunItem = Instantiate(_GunItemPrefab, _ShopContent);
-            GunItem _Item = _GunItem.GetComponent<GunItem>();
-            _GunItemList.Add(_Item);
-            UpdateAllText(i);
+            _ShopItem.SpawnItem(_ShopContent);
+            _ShopItem.SetIcon(0, _stateManager.data.Weapons[i].sprite);
+            _ShopItem.SetText(0, _stateManager.data.Weapons[i].maxAmmo.ToString());
+            _ShopItem.SetText(1, _stateManager.data.Weapons[i].distance.ToString());
+            UpdateButton(i);
         }
-    }
-
-    void UpdateAllText(int i)
-    {
-        _GunItemList[i].icon.sprite = StateMachineManager.data.Weapons[i].sprite;
-        _GunItemList[i].ammoText.text = StateMachineManager.data.Weapons[i].maxAmmo.ToString();
-        _GunItemList[i].distanceText.text = StateMachineManager.data.Weapons[i].distance.ToString();
-        UpdateButton(i);
     }
 
     void UpdateButton(int i)
@@ -56,42 +50,35 @@ public class ShopState : MonoBehaviour
         string wearText = "Wear";
         string clothedText = "Clothed";
 
-        _GunItemList[i].priceText.text = StateMachineManager.data.Weapons[i].isPurchased ? string.Empty : StateMachineManager.data.Weapons[i].price.ToString();
-        _GunItemList[i].itemButton.onClick.RemoveAllListeners();
-        _GunItemList[i].itemButton.onClick.AddListener(() => OnItemButtonClick(i));
-        _GunItemList[i].buttonText.text = GameState.weaponIndex == i ? clothedText : (StateMachineManager.data.Weapons[i].isPurchased ? wearText : buyText);
+        _ShopItem.SetText(2, _stateManager.data.Weapons[i].isPurchased ? string.Empty : _stateManager.data.Weapons[i].price.ToString());
+        _ShopItem.AddListenerOnButton(0, () => OnItemButtonClick(i), true);
+        _ShopItem.GetButton(0).GetComponentInChildren<TextMeshProUGUI>().text =
+            GameState.weaponIndex == i ? clothedText : (_stateManager.data.Weapons[i].isPurchased ? wearText : buyText);
     }
 
     void OnItemButtonClick(int i)
     {
-        if (StateMachineManager.data.Weapons[i].isPurchased)
-            OnWear(i);
-        else
-            OnBuy(i);
-    }
-
-    void OnBuy(int i)
-    {
-        if (GameState.Player.money >= StateMachineManager.data.Weapons[i].price)
+        if (_stateManager.data.Weapons[i].isPurchased) // On Wearing
         {
-            GameState.Player.money -= StateMachineManager.data.Weapons[i].price;
-            StateMachineManager.data.Weapons[i].isPurchased = true;
-            OnWear(i);
+            GameState.weaponIndex = i;
+
+            int _Length = _stateManager.data.Weapons.Length;
+            for (int j = 0; j < _Length; j++)
+            {
+                UpdateButton(j);
+            }
         }
         else
         {
-            Debug.Log("You don't have money");
-        }
-    }
-
-    void OnWear(int i)
-    {
-        GameState.weaponIndex = i;
-
-        int _Length = _GunItemList.Count;
-        for (int j = 0; j < _Length; j++)
-        {
-            UpdateButton(j);
+            if (GameState.Player.money >= _stateManager.data.Weapons[i].price)
+            {
+                GameState.Player.money -= _stateManager.data.Weapons[i].price;
+                _stateManager.data.Weapons[i].isPurchased = true;
+            }
+            else
+            {
+                Debug.Log("You don't have money");
+            }
         }
     }
 }

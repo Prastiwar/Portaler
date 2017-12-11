@@ -5,11 +5,12 @@ using UnityEngine;
 public class PauseState : MonoBehaviour
 {
     [SerializeField] GameObject _PausePanel;
-
+    StateMachineManager _stateManager;
     bool isPause = false;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
+        _stateManager = StateMachineManager.Instance;
         SwitchPause();
     }
 
@@ -25,7 +26,7 @@ public class PauseState : MonoBehaviour
 
     public void OnChangeSceneButton(string _SceneName)
     {
-        StateMachineManager.ChangeSceneTo(_SceneName);
+        _stateManager.ChangeSceneTo(_SceneName);
     }
 
     public void OnPauseButton()
@@ -33,7 +34,7 @@ public class PauseState : MonoBehaviour
         string _StateTo = null;
         _StateTo = isPause ? "Game" : "Pause";
 
-        StateMachineManager.ChangeStateTo(_StateTo);
+        _stateManager.ChangeStateTo(_StateTo);
     }
 
 
