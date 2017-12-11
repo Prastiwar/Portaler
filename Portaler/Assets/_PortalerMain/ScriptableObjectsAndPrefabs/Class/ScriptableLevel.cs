@@ -11,4 +11,20 @@ public class ScriptableLevel : ScriptableObject
 
     public Sprite sprite;
     public float starScoreAmount;
+
+    public object GetSerializers()
+    {
+        List<System.Object> objects = new List<System.Object>();
+        objects.Add(isUnlocked);
+        objects.Add(starScoreAmount);
+        return objects;
+    }
+
+    public void SetSerializers(List<System.Object> objects, int i)
+    {
+        List<System.Object> objectsDeserialized = objects[i] as List<System.Object>;
+
+        isUnlocked = (bool)objectsDeserialized[0];
+        starScoreAmount = (float)objectsDeserialized[1];
+    }
 }

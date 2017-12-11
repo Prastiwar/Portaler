@@ -15,7 +15,7 @@ MonoBehaviour:
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   price: 5
   maxAmmo: 10
-  ammo: 3
+  ammo: 10
   distance: 20
   portal_1: {fileID: 1545731304326808, guid: 98e85cfdaea31984d964a9985da7164a, type: 2}
   portal_2: {fileID: 1856186831497496, guid: 0b3bcb08802b3c94396fc5d56e1e0848, type: 2}

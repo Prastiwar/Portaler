@@ -16,13 +16,14 @@ public class ScriptableWeapon : ScriptableObject
     public GameObject portal_1;
     public GameObject portal_2;
 
-    public void Save(int i)
+    public object GetSerializers()
     {
-        UEncryptPrefs.SetInt("weapon" + i, isPurchased ? 1:0);
+        return isPurchased;
     }
-    public void Load(int i)
+
+    public void SetSerializers(List<System.Object> objects, int i)
     {
-        isPurchased = UEncryptPrefs.GetInt("weapon" + i) == 1 ? true : false;
+        isPurchased = (bool)objects[i];
     }
 
 }
