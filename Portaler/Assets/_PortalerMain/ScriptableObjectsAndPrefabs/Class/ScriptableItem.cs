@@ -61,7 +61,8 @@ public class ScriptableItem : ScriptableObject
 
     public void DeactivAllItem()
     {
-        _itemParent.SetActive(false);
+        if(_itemParent)
+            _itemParent.SetActive(false);
     }
 
     public void SetIcon(int index, Sprite _sprite)

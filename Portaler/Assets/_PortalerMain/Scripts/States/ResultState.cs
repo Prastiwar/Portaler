@@ -69,7 +69,7 @@ public class ResultState : MonoBehaviour
         }
         else if(itemIndex > -1 && hasLose)
         {
-            //always get fee => SetPopup(false, null);
+            SetPopup(false);
         }
     }
     
@@ -148,9 +148,11 @@ public class ResultState : MonoBehaviour
     {
         if (hasLose)
             return 0;
-        // im mniej wystrzelisz - tym lepszy wynik, 100% jest niemożliwe.. 
-        
-        float result = data.Weapons[weaponIndex].ammo / data.Weapons[weaponIndex].maxAmmo;
+
+        float result = (float)data.Weapons[weaponIndex].ammo / (float)(data.Weapons[weaponIndex].maxAmmo / 2);
+        if (result > 1f)
+            result = 1f;
+
         return result;
     }
 
