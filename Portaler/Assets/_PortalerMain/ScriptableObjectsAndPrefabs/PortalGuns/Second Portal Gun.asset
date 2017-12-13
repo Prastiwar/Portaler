@@ -14,8 +14,8 @@ MonoBehaviour:
   isPurchased: 0
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   price: 1
-  maxAmmo: 2
-  ammo: -1
-  distance: 4
+  maxAmmo: 5
+  ammo: 5
+  distance: 5
   portal_1: {fileID: 0}
   portal_2: {fileID: 0}

@@ -15,7 +15,7 @@ public class PlayerMotor : MonoBehaviour
     public Transform weaponPos;
     float moveHorizontal;
 
-    Rigidbody2D rb2D;
+    public Rigidbody2D rb2D;
     Vector2 _rb2dVelocity;
     SpriteRenderer sr;
 
@@ -43,6 +43,7 @@ public class PlayerMotor : MonoBehaviour
         anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        rb2D.bodyType = RigidbodyType2D.Static;
     }
 
     void LateUpdate()
@@ -56,7 +57,8 @@ public class PlayerMotor : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move();
+        if(rb2D.bodyType == RigidbodyType2D.Dynamic)
+            Move();
     }
 
     public void OnWalkLeft()
@@ -90,7 +92,7 @@ public class PlayerMotor : MonoBehaviour
         if (canMove)
         {
             // Check grounded
-            if (Physics2D.OverlapCircle(groundPos.position, 0.04f, ground))
+            if (Physics2D.OverlapCircle(groundPos.position, 0.055f, ground))
             {
                 if (!isGrounded)
                     isGrounded = true;

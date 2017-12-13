@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable/Weapon", fileName = "New Weapon")]
-public class ScriptableWeapon : ScriptableObject
+public class ScriptableWeapon : ScriptableObject, ISerializable
 {
     public bool isPurchased;
 

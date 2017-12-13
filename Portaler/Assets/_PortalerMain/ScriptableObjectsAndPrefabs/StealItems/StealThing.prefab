@@ -9,48 +9,49 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1511931673591630}
+  m_RootGameObject: {fileID: 1029745512503432}
   m_IsPrefabParent: 1
---- !u!1 &1511931673591630
+--- !u!1 &1029745512503432
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4032791983894824}
-  - component: {fileID: 212578622042282972}
-  - component: {fileID: 61589674707442694}
+  - component: {fileID: 4954451746521754}
+  - component: {fileID: 212708461069397478}
+  - component: {fileID: 114786140224162252}
+  - component: {fileID: 61064874540675248}
   m_Layer: 0
-  m_Name: FirstGuard
+  m_Name: StealThing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4032791983894824
+--- !u!4 &4954451746521754
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1511931673591630}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.61, y: -0.43, z: 1}
-  m_LocalScale: {x: 15, y: 25, z: 1}
+  m_GameObject: {fileID: 1029745512503432}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -259.62033, y: -504.9865, z: 12.663208}
+  m_LocalScale: {x: 10, y: 10, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61589674707442694
+--- !u!61 &61064874540675248
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1511931673591630}
+  m_GameObject: {fileID: 1029745512503432}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -64,14 +65,28 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 0.1, y: 0.1}
   m_EdgeRadius: 0
---- !u!212 &212578622042282972
+--- !u!114 &114786140224162252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029745512503432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b64b96728f574244cbd05cf4447dda4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colItemType: 2
+  stealItem: {fileID: 11400000, guid: 430e6359d2d903a4eb841767a61343fe, type: 2}
+  isItFirstPortal: 0
+--- !u!212 &212708461069397478
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1511931673591630}
+  m_GameObject: {fileID: 1029745512503432}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

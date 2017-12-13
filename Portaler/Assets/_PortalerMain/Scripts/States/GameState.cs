@@ -72,19 +72,20 @@ public class GameState : MonoBehaviour
     // Instantiate level by index
     void SetLevel()
     {
-        //GameObject _level;
-        //if (data.Levels[lvlIndex] != null)
-        //    _level = Instantiate(comingSoonScene);
-        //else
-        //    _level = Instantiate(data.Levels[lvlIndex].levelPrefab);
+        GameObject _level;
+        if (_stateManager.data.Levels[player.lvlIndex] != null)
+            _level = Instantiate(_stateManager.data.Levels[player.lvlIndex].levelPrefab);
+        else
+            _level = Instantiate(comingSoonScene);
 
         player.itemIndex = -1;
         player.isSpotted = false;
-        //Player.playerTransform.position = data.Levels[lvlIndex].startWaypoint.position;
+        PlayerMotor.instance.player.position = _stateManager.data.Levels[player.lvlIndex].startWaypoint.position;
         StateMachineManager.Instance.data.Weapons[player.weaponIndex].ammo = _stateManager.data.Weapons[player.weaponIndex].maxAmmo;
         Portal_1 = Instantiate(_stateManager.data.Weapons[player.weaponIndex].portal_1);
         Portal_2 = Instantiate(_stateManager.data.Weapons[player.weaponIndex].portal_2);
 
+        PlayerMotor.instance.rb2D.bodyType = RigidbodyType2D.Dynamic;
     }
 
     // What to do when player've went into portal
@@ -123,13 +124,14 @@ public class GameState : MonoBehaviour
 
                 Vector3 portalPos = portal.transform.position;
                 portalPos = hit2D.point;
-                portalPos.z = 12;
                 portal.transform.position = portalPos;
 
                 portal.transform.rotation = Quaternion.LookRotation(hit2D.normal);
                 Vector2 euler = portal.transform.eulerAngles;
                 if (hit2D.normal.x < 0)
                     euler.y -= 11;
+                else if (hit2D.normal.x > 0)
+                    euler.y += 11;
                 else
                     euler.x -= 11;
                 portal.transform.eulerAngles = euler;

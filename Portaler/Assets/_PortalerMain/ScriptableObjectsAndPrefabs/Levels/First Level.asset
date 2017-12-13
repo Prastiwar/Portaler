@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Name: First Level
   m_EditorClassIdentifier: 
   isUnlocked: 1
-  levelPrefab: {fileID: 0}
-  startWaypoint: {fileID: 0}
+  levelPrefab: {fileID: 1454098297249328, guid: e536eacaf6b8e7543b84b5eeee087b1e,
+    type: 2}
+  startWaypoint: {fileID: 4816797854127872, guid: e536eacaf6b8e7543b84b5eeee087b1e,
+    type: 2}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  starScoreAmount: 1
+  starScoreAmount: 0

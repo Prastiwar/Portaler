@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using System.Diagnostics;
 
 public class StateMachineManager : MonoBehaviour
 {
@@ -53,5 +56,4 @@ public class StateMachineManager : MonoBehaviour
     {
         SaveLoad.Save();
     }
-
 }

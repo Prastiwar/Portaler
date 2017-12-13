@@ -15,4 +15,4 @@ MonoBehaviour:
   levelPrefab: {fileID: 0}
   startWaypoint: {fileID: 0}
   sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  starScoreAmount: 6.91
+  starScoreAmount: 0

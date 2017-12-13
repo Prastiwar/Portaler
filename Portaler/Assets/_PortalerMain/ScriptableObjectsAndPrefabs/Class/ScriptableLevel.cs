@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable/Level", fileName = "New Level")]
-public class ScriptableLevel : ScriptableObject
+public class ScriptableLevel : ScriptableObject, ISerializable
 {
     public bool isUnlocked;
     public GameObject levelPrefab;
@@ -14,9 +14,11 @@ public class ScriptableLevel : ScriptableObject
 
     public object GetSerializers()
     {
-        List<System.Object> objects = new List<System.Object>();
-        objects.Add(isUnlocked);
-        objects.Add(starScoreAmount);
+        List<System.Object> objects = new List<System.Object>
+        {
+            isUnlocked,
+            starScoreAmount
+        };
         return objects;
     }
 
