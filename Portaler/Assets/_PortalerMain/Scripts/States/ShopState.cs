@@ -46,12 +46,14 @@ public class ShopState : MonoBehaviour
 
     void UpdateButton(int i)
     {
+        int x = i;
         string buyText = "Buy";
         string wearText = "Wear";
         string clothedText = "Clothed";
 
-        _ShopItem.SetText(2, _stateManager.data.Weapons[i].isPurchased ? string.Empty : _stateManager.data.Weapons[i].price.ToString());
-        _ShopItem.AddListenerOnButton(0, () => OnItemButtonClick(i), true);
+        _ShopItem.GetText(2).gameObject.SetActive(_stateManager.data.Weapons[i].isPurchased ? false : true);
+        _ShopItem.SetText(2, _stateManager.data.Weapons[i].price.ToString());
+        _ShopItem.AddListenerOnButton(0, () => OnItemButtonClick(x), true);
         _ShopItem.GetButton(0).GetComponentInChildren<TextMeshProUGUI>().text =
             GameState.player.weaponIndex == i ? clothedText : (_stateManager.data.Weapons[i].isPurchased ? wearText : buyText);
     }

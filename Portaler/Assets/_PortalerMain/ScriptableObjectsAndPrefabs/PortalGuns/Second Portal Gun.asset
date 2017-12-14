@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Second Portal Gun
   m_EditorClassIdentifier: 
   isPurchased: 0
-  sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  sprite: {fileID: 21300000, guid: fcdc00a8722e44443b62bc2d8c358b25, type: 3}
   price: 1
   maxAmmo: 5
   ammo: 5

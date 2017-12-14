@@ -14,13 +14,12 @@ MonoBehaviour:
   Weapons:
   - {fileID: 11400000, guid: 8a4b9abea0e6f6643850171a727256ca, type: 2}
   - {fileID: 11400000, guid: 38d28498422d04d4da14890cc1217743, type: 2}
-  - {fileID: 11400000, guid: 38d28498422d04d4da14890cc1217743, type: 2}
-  - {fileID: 11400000, guid: 38d28498422d04d4da14890cc1217743, type: 2}
-  - {fileID: 11400000, guid: 38d28498422d04d4da14890cc1217743, type: 2}
+  - {fileID: 11400000, guid: e58178b44d5fb8f4aa98b2de9f8eaac6, type: 2}
   Enemies:
   - {fileID: 11400000, guid: 6a72bc6512f49f14d9b1b35d1c72f713, type: 2}
   Levels:
   - {fileID: 11400000, guid: 9e0c642ef35c0cf44b145ce9a6f5c63f, type: 2}
+  - {fileID: 11400000, guid: 2cf11b6d2e593194fbdf2db63e29c11b, type: 2}
   - {fileID: 11400000, guid: 2cf11b6d2e593194fbdf2db63e29c11b, type: 2}
   StealItems:
   - {fileID: 11400000, guid: 430e6359d2d903a4eb841767a61343fe, type: 2}

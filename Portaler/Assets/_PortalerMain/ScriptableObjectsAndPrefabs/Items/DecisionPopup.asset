@@ -15,6 +15,6 @@ MonoBehaviour:
     type: 2}
   icons: []
   texts:
-  - {fileID: 114018356979817726, guid: bd758bbfa699f5f4f91bde194f20b0a1, type: 2}
+  - {fileID: 114020634206338972, guid: bb03a1464c875724f9e3386e4c4ac32a, type: 2}
   buttons:
-  - {fileID: 114700889125768490, guid: bd758bbfa699f5f4f91bde194f20b0a1, type: 2}
+  - {fileID: 114773853622728878, guid: bb03a1464c875724f9e3386e4c4ac32a, type: 2}

@@ -73,7 +73,7 @@ public class GameState : MonoBehaviour
     void SetLevel()
     {
         GameObject _level;
-        if (_stateManager.data.Levels[player.lvlIndex] != null)
+        if (player.lvlIndex < _stateManager.data.Levels.Length)
             _level = Instantiate(_stateManager.data.Levels[player.lvlIndex].levelPrefab);
         else
             _level = Instantiate(comingSoonScene);

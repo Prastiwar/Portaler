@@ -10,6 +10,7 @@ public class ScriptableLevel : ScriptableObject, ISerializable
     public Transform startWaypoint;
 
     public Sprite sprite;
+    public Sprite lockedSprite;
     public float starScoreAmount;
 
     public object GetSerializers()

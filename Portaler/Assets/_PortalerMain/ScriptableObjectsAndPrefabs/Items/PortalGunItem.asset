@@ -14,10 +14,10 @@ MonoBehaviour:
   _itemContentLayout: {fileID: 1382081833163426, guid: df73ac43fe255a94aa5ef328bf4ad9a2,
     type: 2}
   icons:
-  - {fileID: 114744582842937524, guid: 5d4f3aece9de6cb459f98114ecc30235, type: 2}
+  - {fileID: 114208767991825036, guid: aadd5e99b04bd0848a8cb1e5bd029fe7, type: 2}
   texts:
-  - {fileID: 114209018219794050, guid: 5d4f3aece9de6cb459f98114ecc30235, type: 2}
-  - {fileID: 114093328685401496, guid: 5d4f3aece9de6cb459f98114ecc30235, type: 2}
-  - {fileID: 114706827232941948, guid: 5d4f3aece9de6cb459f98114ecc30235, type: 2}
+  - {fileID: 114120555819983426, guid: aadd5e99b04bd0848a8cb1e5bd029fe7, type: 2}
+  - {fileID: 114332663709802790, guid: aadd5e99b04bd0848a8cb1e5bd029fe7, type: 2}
+  - {fileID: 114463497826238466, guid: aadd5e99b04bd0848a8cb1e5bd029fe7, type: 2}
   buttons:
-  - {fileID: 114057617397291782, guid: 5d4f3aece9de6cb459f98114ecc30235, type: 2}
+  - {fileID: 114537338224386182, guid: aadd5e99b04bd0848a8cb1e5bd029fe7, type: 2}

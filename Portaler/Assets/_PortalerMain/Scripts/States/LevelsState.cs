@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelsState : MonoBehaviour
 {
@@ -35,14 +36,14 @@ public class LevelsState : MonoBehaviour
         int _Length = data.Levels.Length;
         for (int i = 0; i < _Length; i++)
         {
+            int x = i;
             var level = data.Levels[i];
             _LevelItem.SpawnItem(_LevelContent);
 
-            _LevelItem.SetIcon(0, level.sprite);
-            _LevelItem.GetIcon(1).gameObject.SetActive(!level.isUnlocked);
-            _LevelItem.GetIcon(2).fillAmount = level.starScoreAmount;
+            _LevelItem.GetIcon(0).fillAmount = level.starScoreAmount;
+            _LevelItem.GetButton(0).GetComponent<Image>().sprite = level.isUnlocked ? level.sprite : level.lockedSprite;
             _LevelItem.GetButton(0).interactable = level.isUnlocked;
-            _LevelItem.AddListenerOnButton(0, () => SetLevel(i), true);
+            _LevelItem.AddListenerOnButton(0, () => SetLevel(x), true);
         }
     }
 

@@ -9,13 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 949dc25b6f172e343a841814a9b35b36, type: 3}
-  m_Name: First Portal Gun
+  m_Name: Thirs Portal Gun
   m_EditorClassIdentifier: 
-  isPurchased: 1
+  isPurchased: 0
   sprite: {fileID: 21300000, guid: fcdc00a8722e44443b62bc2d8c358b25, type: 3}
-  price: 10
-  maxAmmo: 10
-  ammo: 10
-  distance: 20
-  portal_1: {fileID: 1545731304326808, guid: 98e85cfdaea31984d964a9985da7164a, type: 2}
-  portal_2: {fileID: 1856186831497496, guid: 0b3bcb08802b3c94396fc5d56e1e0848, type: 2}
+  price: 11
+  maxAmmo: 11
+  ammo: 11
+  distance: 11
+  portal_1: {fileID: 0}
+  portal_2: {fileID: 0}
