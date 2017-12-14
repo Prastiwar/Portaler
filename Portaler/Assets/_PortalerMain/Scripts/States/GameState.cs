@@ -19,11 +19,16 @@ public class GameState : MonoBehaviour
     [SerializeField] public static Player player;
     [SerializeField] GameObject comingSoonScene;
     [SerializeField] Transform firePoint;
+    [SerializeField] Color colorPortal1;
+    [SerializeField] Color colorPortal2;
+    [SerializeField] UnityEngine.UI.Button swapButton;
 
     GameObject[] _StealItems;
 
     static GameObject Portal_1;
     static GameObject Portal_2;
+    bool isHover = false;
+    bool isFirstPortal = true;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
@@ -36,11 +41,11 @@ public class GameState : MonoBehaviour
 
     public void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && isFirstPortal)
         {
             SetPortal(Portal_1);
         }
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0) && !isFirstPortal)
         {
             SetPortal(Portal_2);
         }
@@ -50,10 +55,21 @@ public class GameState : MonoBehaviour
     {
     }
 
+    public void Hovering(bool boolean)
+    {
+        isHover = boolean;
+    }
+
     public static void GameOver(bool _isSpotted)
     {
         player.isSpotted = _isSpotted;
         _stateManager.ChangeSceneTo("Result");
+    }
+
+    public void SwapPortal()
+    {
+        isFirstPortal = !isFirstPortal;
+        swapButton.GetComponent<UnityEngine.UI.Image>().color = isFirstPortal ? colorPortal1 : colorPortal2;
     }
 
     public static void GetStealItem(ScriptableStealItem _stealItem)
@@ -107,6 +123,9 @@ public class GameState : MonoBehaviour
     // Active and setting portal position on wall
     public void SetPortal(GameObject portal)
     {
+        if (isHover)
+            return;
+
         Vector3 mousePosition = Input.mousePosition;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mousePosition);
         Vector2 direction = (mouseWorld - firePoint.position).normalized;

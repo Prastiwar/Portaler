@@ -8,11 +8,10 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "Scriptable/Item", fileName = "New Item")]
 public class ScriptableItem : ScriptableObject
 {
-    //public bool ToggleItemVisual
-    [HideInInspector] public GameObject _itemContentLayout;
-    [HideInInspector] public Image[] icons;
-    [HideInInspector] public TextMeshProUGUI[] texts;
-    [HideInInspector] public Button[] buttons;
+    public GameObject _itemContentLayout;
+    public Image[] icons;
+    public TextMeshProUGUI[] texts;
+    public Button[] buttons;
 
     GameObject _itemParent;
     List<Button> buttonList = new List<Button>();

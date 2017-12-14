@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable/Level", fileName = "New Level")]
 public class ScriptableLevel : ScriptableItem, ISerializable
 {
-    [Header("Main Level Content")]
+    [Header("Main Level Content - Dont look up")]
     public ScriptableItem scriptableItem;
     public bool isUnlocked;
     public GameObject levelPrefab;

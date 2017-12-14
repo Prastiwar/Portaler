@@ -5,23 +5,34 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEditor;
 
-[CustomEditor(typeof(CollisionManager))]
+[CustomEditor(typeof(ScriptableItem), true)]
 [CanEditMultipleObjects]
 public class ScriptableItemEditor : Editor
 {
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
+    //bool active = true;
 
-        var scriptableItem = target as ScriptableItem;
+    //public override void OnInspectorGUI()
+    //{
+    //    var serializedObject = new SerializedObject(target);
+    //    var layout = serializedObject.FindProperty("_itemContentLayout");
+    //    var icons = serializedObject.FindProperty("icons");
+    //    var texts = serializedObject.FindProperty("texts");
+    //    var buttons = serializedObject.FindProperty("buttons");
 
-        if (GUILayout.Button("Toggle Item Layout Visuals"))
-        {
-            EditorGUILayout.ObjectField("_itemContentLayout", scriptableItem._itemContentLayout, typeof(GameObject), true);
-            EditorGUILayout.ObjectField("icons", scriptableItem.icons, typeof(Image[]), true);
-            EditorGUILayout.ObjectField("texts", scriptableItem.texts, typeof(TextMeshProUGUI[]), true);
-            EditorGUILayout.ObjectField("buttons", scriptableItem.buttons, typeof(Button[]), true);
-        }
-    }
+    //    if (GUILayout.Button("Toggle Item Layout Visuals"))
+    //    {
+    //        active = !active;
+    //    }
+    //    if (active)
+    //    {
+    //        serializedObject.Update();
+    //        EditorGUILayout.PropertyField(layout, true);
+    //        EditorGUILayout.PropertyField(icons, true);
+    //        EditorGUILayout.PropertyField(texts, true);
+    //        EditorGUILayout.PropertyField(buttons, true);
+    //        serializedObject.ApplyModifiedProperties();
+    //    }
 
+    //    base.DrawDefaultInspector();
+    //}
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable/Weapon", fileName = "New Weapon")]
 public class ScriptableWeapon : ScriptableItem, ISerializable
 {
-    [Header("Main Weapon Content")]
+    [Header("Main Weapon Content - Dont look up")]
     public ScriptableItem scriptableItem;
     public bool isPurchased;
 
