@@ -11,6 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0726b7929efab047aa32bd5f88ba928, type: 3}
   m_Name: Second Level
   m_EditorClassIdentifier: 
+  _itemContentLayout: {fileID: 0}
+  icons: []
+  texts: []
+  buttons: []
+  scriptableItem: {fileID: 11400000, guid: 6eee568332e91964fb667da0bbaaddeb, type: 2}
   isUnlocked: 0
   levelPrefab: {fileID: 0}
   startWaypoint: {fileID: 0}

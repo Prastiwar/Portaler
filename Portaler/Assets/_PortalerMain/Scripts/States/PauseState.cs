@@ -11,7 +11,7 @@ public class PauseState : MonoBehaviour
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         _stateManager = StateMachineManager.Instance;
-        SwitchPause();
+        
     }
 
     public void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -21,7 +21,7 @@ public class PauseState : MonoBehaviour
 
     public void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        SwitchPause();
+        
     }
 
     public void OnChangeSceneButton(string _SceneName)
@@ -31,10 +31,10 @@ public class PauseState : MonoBehaviour
 
     public void OnPauseButton()
     {
-        string _StateTo = null;
+        string _StateTo;
         _StateTo = isPause ? "Game" : "Pause";
-
-        _stateManager.ChangeStateTo(_StateTo);
+        SwitchPause();
+        StateMachineManager.Instance.ChangeStateTo(_StateTo);
     }
 
 

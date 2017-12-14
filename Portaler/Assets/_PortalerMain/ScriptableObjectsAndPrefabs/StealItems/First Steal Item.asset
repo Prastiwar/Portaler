@@ -11,7 +11,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5fc27ee1a8b354b90c24b486a2b25d, type: 3}
   m_Name: First Steal Item
   m_EditorClassIdentifier: 
-  image: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  _itemContentLayout: {fileID: 0}
+  icons: []
+  texts: []
+  buttons: []
+  scriptableItem: {fileID: 11400000, guid: 30ff417330e3e3a47997c69cade5e871, type: 2}
+  image: {fileID: 21300000, guid: 7ec9b16651ac2d24aa8f57076b1d69fd, type: 3}
   nameItem: First Item
   moneyValue: 50
   description: It's description of first item

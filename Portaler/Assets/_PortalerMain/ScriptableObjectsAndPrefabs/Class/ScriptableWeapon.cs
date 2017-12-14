@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable/Weapon", fileName = "New Weapon")]
-public class ScriptableWeapon : ScriptableObject, ISerializable
+public class ScriptableWeapon : ScriptableItem, ISerializable
 {
+    [Header("Main Weapon Content")]
+    public ScriptableItem scriptableItem;
     public bool isPurchased;
 
     public Sprite sprite;
@@ -15,6 +17,14 @@ public class ScriptableWeapon : ScriptableObject, ISerializable
 
     public GameObject portal_1;
     public GameObject portal_2;
+
+    public void InitializeItem()
+    {
+        _itemContentLayout = scriptableItem._itemContentLayout;
+        icons = scriptableItem.icons;
+        texts = scriptableItem.texts;
+        buttons = scriptableItem.buttons;
+    }
 
     public object GetSerializers()
     {

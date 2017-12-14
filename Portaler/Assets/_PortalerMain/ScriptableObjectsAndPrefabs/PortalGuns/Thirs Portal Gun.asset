@@ -11,6 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 949dc25b6f172e343a841814a9b35b36, type: 3}
   m_Name: Thirs Portal Gun
   m_EditorClassIdentifier: 
+  _itemContentLayout: {fileID: 0}
+  icons: []
+  texts: []
+  buttons: []
+  scriptableItem: {fileID: 11400000, guid: 17a6549766e4c59428744ef7426575fd, type: 2}
   isPurchased: 0
   sprite: {fileID: 21300000, guid: fcdc00a8722e44443b62bc2d8c358b25, type: 3}
   price: 11

@@ -21,9 +21,10 @@ public class ResultState : MonoBehaviour
     [SerializeField] ScriptableTextData textData;
     
     [SerializeField] Transform _ItemParent;
-    [SerializeField] ScriptableItem _Item;
+
     [SerializeField] Transform _PopupParent;
     [SerializeField] ScriptableItem _Popup;
+
     StateMachineManager _stateManager;
     int itemIndex = GameState.player.itemIndex;
     int weaponIndex = GameState.player.weaponIndex;
@@ -76,20 +77,20 @@ public class ResultState : MonoBehaviour
     void CreateItem()
     {
         var stealItem = data.StealItems[itemIndex];
-
-        _Item.SpawnItem(_ItemParent);
-        _Item.SetIcon(0, stealItem.image);
-        _Item.SetText(0, stealItem.nameItem);
-        _Item.SetText(1, stealItem.moneyValue.ToString());
-        _Item.SetText(2, stealItem.description);
-        _Item.AddListenerOnButton(0, () => OnSell());
-        _Item.AddListenerOnButton(1, () => OnCancelButton());
+        stealItem.InitializeItem();
+        stealItem.SpawnItem(_ItemParent);
+        stealItem.SetIcon(0, stealItem.image);
+        stealItem.SetText(0, stealItem.nameItem);
+        stealItem.SetText(1, stealItem.moneyValue.ToString());
+        stealItem.SetText(2, stealItem.description);
+        stealItem.AddListenerOnButton(0, () => OnSell());
+        stealItem.AddListenerOnButton(1, () => OnCancelButton());
     }
 
     void OnCancelButton()
     {
         _Popup.DeactivAllItem();
-        _Item.DeactivAllItem();
+        data.StealItems[itemIndex].DeactivAllItem();
     }
 
     void OnSell()

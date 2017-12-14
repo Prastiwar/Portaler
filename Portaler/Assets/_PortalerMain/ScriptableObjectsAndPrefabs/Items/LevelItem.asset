@@ -14,8 +14,8 @@ MonoBehaviour:
   _itemContentLayout: {fileID: 1440317110708582, guid: 792047b525b3cf84c8cfd3d8224dff71,
     type: 2}
   icons:
-  - {fileID: 114735032073174900, guid: 108c8d3dc97dda94086304a6b30fadba, type: 2}
   - {fileID: 114453724478980022, guid: 108c8d3dc97dda94086304a6b30fadba, type: 2}
+  - {fileID: 114735032073174900, guid: 108c8d3dc97dda94086304a6b30fadba, type: 2}
   texts: []
   buttons:
   - {fileID: 114790002753989296, guid: 108c8d3dc97dda94086304a6b30fadba, type: 2}

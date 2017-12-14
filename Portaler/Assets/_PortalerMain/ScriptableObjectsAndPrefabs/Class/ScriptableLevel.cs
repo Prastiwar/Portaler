@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable/Level", fileName = "New Level")]
-public class ScriptableLevel : ScriptableObject, ISerializable
+public class ScriptableLevel : ScriptableItem, ISerializable
 {
+    [Header("Main Level Content")]
+    public ScriptableItem scriptableItem;
     public bool isUnlocked;
     public GameObject levelPrefab;
     public Transform startWaypoint;
@@ -12,6 +14,14 @@ public class ScriptableLevel : ScriptableObject, ISerializable
     public Sprite sprite;
     public Sprite lockedSprite;
     public float starScoreAmount;
+
+    public void InitializeItem()
+    {
+        _itemContentLayout = scriptableItem._itemContentLayout;
+        icons = scriptableItem.icons;
+        texts = scriptableItem.texts;
+        buttons = scriptableItem.buttons;
+    }
 
     public object GetSerializers()
     {

@@ -5,9 +5,7 @@ using TMPro;
 
 public class ShopState : MonoBehaviour
 {
-    [SerializeField] ScriptableData data;
     [SerializeField] Transform _ShopContent;
-    [SerializeField] ScriptableItem _ShopItem;
     StateMachineManager _stateManager;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -36,26 +34,33 @@ public class ShopState : MonoBehaviour
         int _Length = _stateManager.data.Weapons.Length;
         for (int i = 0; i < _Length; i++)
         {
-            _ShopItem.SpawnItem(_ShopContent);
-            _ShopItem.SetIcon(0, _stateManager.data.Weapons[i].sprite);
-            _ShopItem.SetText(0, _stateManager.data.Weapons[i].maxAmmo.ToString());
-            _ShopItem.SetText(1, _stateManager.data.Weapons[i].distance.ToString());
-            UpdateButton(i);
+            var item = _stateManager.data.Weapons[i];
+            item.InitializeItem();
+            item.SpawnItem(_ShopContent);
+            item.SetIcon(0, _stateManager.data.Weapons[i].sprite);
+            item.SetText(0, _stateManager.data.Weapons[i].maxAmmo.ToString());
+            item.SetText(1, _stateManager.data.Weapons[i].distance.ToString());
         }
+        UpdateButton();
     }
 
-    void UpdateButton(int i)
+    void UpdateButton()
     {
-        int x = i;
         string buyText = "Buy";
         string wearText = "Wear";
         string clothedText = "Clothed";
 
-        _ShopItem.GetText(2).gameObject.SetActive(_stateManager.data.Weapons[i].isPurchased ? false : true);
-        _ShopItem.SetText(2, _stateManager.data.Weapons[i].price.ToString());
-        _ShopItem.AddListenerOnButton(0, () => OnItemButtonClick(x), true);
-        _ShopItem.GetButton(0).GetComponentInChildren<TextMeshProUGUI>().text =
-            GameState.player.weaponIndex == i ? clothedText : (_stateManager.data.Weapons[i].isPurchased ? wearText : buyText);
+        int _Length = _stateManager.data.Weapons.Length;
+        for (int i = 0; i < _Length; i++)
+        {
+            int x = i;
+            var item = _stateManager.data.Weapons[i];
+            item.GetText(2).gameObject.SetActive(_stateManager.data.Weapons[i].isPurchased ? false : true);
+            item.SetText(2, _stateManager.data.Weapons[i].price.ToString());
+            item.AddListenerOnButton(0, () => OnItemButtonClick(x), true);
+            item.GetButton(0).GetComponentInChildren<TextMeshProUGUI>().text =
+                GameState.player.weaponIndex == i ? clothedText : (_stateManager.data.Weapons[i].isPurchased ? wearText : buyText);
+        }
     }
 
     void OnItemButtonClick(int i)
@@ -64,11 +69,7 @@ public class ShopState : MonoBehaviour
         {
             GameState.player.weaponIndex = i;
 
-            int _Length = _stateManager.data.Weapons.Length;
-            for (int j = 0; j < _Length; j++)
-            {
-                UpdateButton(j);
-            }
+            UpdateButton();
         }
         else
         {

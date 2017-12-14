@@ -8,15 +8,20 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "Scriptable/Item", fileName = "New Item")]
 public class ScriptableItem : ScriptableObject
 {
-    [SerializeField] GameObject _itemContentLayout;
-    [SerializeField] Image[] icons;
-    [SerializeField] TextMeshProUGUI[] texts;
-    [SerializeField] Button[] buttons;
+    //public bool ToggleItemVisual
+    [HideInInspector] public GameObject _itemContentLayout;
+    [HideInInspector] public Image[] icons;
+    [HideInInspector] public TextMeshProUGUI[] texts;
+    [HideInInspector] public Button[] buttons;
 
     GameObject _itemParent;
     List<Button> buttonList = new List<Button>();
     List<TextMeshProUGUI> textList = new List<TextMeshProUGUI>();
     List<Image> iconList = new List<Image>();
+
+    public Image GetIcon(int index) { return iconList[index]; }
+    public TextMeshProUGUI GetText(int index) { return textList[index]; }
+    public Button GetButton(int index) { return buttonList[index]; }
 
     // Check what array is highest, set it to for _Length
     int GetHighestLength()
@@ -54,10 +59,6 @@ public class ScriptableItem : ScriptableObject
                 buttonList.Add(Instantiate(buttons[i], _Parent));
         }
     }
-
-    public Image GetIcon(int index){ return iconList[index]; }
-    public TextMeshProUGUI GetText(int index){ return textList[index]; }
-    public Button GetButton(int index){ return buttonList[index]; }
 
     public void DeactivAllItem()
     {

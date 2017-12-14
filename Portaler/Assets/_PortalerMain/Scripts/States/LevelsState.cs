@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class LevelsState : MonoBehaviour
 {
     [SerializeField] Transform _LevelContent;
-    [SerializeField] ScriptableData data;
-    [SerializeField] ScriptableItem _LevelItem;
     StateMachineManager _stateManager;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -30,20 +28,20 @@ public class LevelsState : MonoBehaviour
     {
         _stateManager.ChangeSceneTo(_SceneName);
     }
-
+    
     void SpawnLeveltems()
     {
-        int _Length = data.Levels.Length;
+        int _Length = _stateManager.data.Levels.Length;
         for (int i = 0; i < _Length; i++)
         {
             int x = i;
-            var level = data.Levels[i];
-            _LevelItem.SpawnItem(_LevelContent);
-
-            _LevelItem.GetIcon(0).fillAmount = level.starScoreAmount;
-            _LevelItem.GetButton(0).GetComponent<Image>().sprite = level.isUnlocked ? level.sprite : level.lockedSprite;
-            _LevelItem.GetButton(0).interactable = level.isUnlocked;
-            _LevelItem.AddListenerOnButton(0, () => SetLevel(x), true);
+            var level = _stateManager.data.Levels[i];
+            level.InitializeItem();
+            level.SpawnItem(_LevelContent);
+            level.GetIcon(1).fillAmount = level.starScoreAmount;
+            level.GetButton(0).GetComponent<Image>().sprite = level.isUnlocked ? level.sprite : level.lockedSprite;
+            level.GetButton(0).interactable = level.isUnlocked;
+            level.AddListenerOnButton(0, () => SetLevel(x), true);
         }
     }
 
