@@ -6,8 +6,10 @@ using TMPro;
 
 public class ResultState : MonoBehaviour
 {
-    [SerializeField] GameObject _WinPanel;
-    [SerializeField] GameObject _LosePanel;
+    [SerializeField] ParticleSystem _Particles;
+    [SerializeField] Color _LoseColor;
+    [SerializeField] Color _WinColor;
+
     [SerializeField] Button _ToLevelButton;
 
     [SerializeField] TextMeshProUGUI _ToLevelButtonText;
@@ -24,6 +26,9 @@ public class ResultState : MonoBehaviour
 
     [SerializeField] Transform _PopupParent;
     [SerializeField] ScriptableItem _Popup;
+
+    [SerializeField] AudioClip[] audioClips;
+    [SerializeField] AudioClip[] audioMusic;
 
     StateMachineManager _stateManager;
     int itemIndex = GameState.player.itemIndex;
@@ -54,10 +59,17 @@ public class ResultState : MonoBehaviour
 
     void SetResultScreen()
     {
+        var main = _Particles.main;
         if (hasLose)
-            _LosePanel.SetActive(true);
+        {
+            main.startColor = _LoseColor;
+            SoundManager.Instance.PlayMusic(audioMusic[0], 0.1f);
+        }
         else
-            _WinPanel.SetActive(true);
+        {
+            main.startColor = _WinColor;
+            SoundManager.Instance.PlayMusic(audioMusic[1], 0.1f);
+        }
 
         SetTexts();
 
@@ -89,6 +101,7 @@ public class ResultState : MonoBehaviour
 
     void OnCancelButton()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.audioClips[0], 1);
         _Popup.DeactivAllItem();
         data.StealItems[itemIndex].DeactivAllItem();
     }
@@ -98,6 +111,8 @@ public class ResultState : MonoBehaviour
         bool isDone = true;
         int randBool = Random.Range(0,100);
         isDone = (randBool > 0 && randBool < 50) ? true : false;
+
+        SoundManager.Instance.PlaySound(isDone ? audioClips[0] : audioClips[1], 1); // done or fail sound
 
         SetPopup(isDone);
     }
@@ -159,6 +174,7 @@ public class ResultState : MonoBehaviour
 
     public void OnLevelButton()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.audioClips[0], 1);
         if (!hasLose)
             GameState.player.lvlIndex += 1;
 

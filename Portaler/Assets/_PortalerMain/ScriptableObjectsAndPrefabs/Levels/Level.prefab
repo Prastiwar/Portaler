@@ -481,6 +481,7 @@ MonoBehaviour:
   colItemType: 1
   stealItem: {fileID: 0}
   isItFirstPortal: 0
+  audioClip: {fileID: 8300000, guid: f9a9e0ff95a6628409366017d72f4863, type: 3}
 --- !u!212 &212175865830341678
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -22,6 +22,9 @@ public class GameState : MonoBehaviour
     [SerializeField] Color colorPortal1;
     [SerializeField] Color colorPortal2;
     [SerializeField] UnityEngine.UI.Button swapButton;
+    [SerializeField] ParticleSystem shootParticles;
+    [SerializeField] AudioClip[] audioClips;
+    static AudioClip[] staticClips;
 
     GameObject[] _StealItems;
 
@@ -37,6 +40,8 @@ public class GameState : MonoBehaviour
             return;
         _stateManager = StateMachineManager.Instance;
         SetLevel();
+        staticClips = audioClips;
+        SoundManager.Instance.PlayMusic(audioClips[0], 0.051f);
     }
 
     public void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -62,12 +67,14 @@ public class GameState : MonoBehaviour
 
     public static void GameOver(bool _isSpotted)
     {
+        SoundManager.Instance.PlaySound(staticClips[2], 1);
         player.isSpotted = _isSpotted;
         _stateManager.ChangeSceneTo("Result");
     }
 
     public void SwapPortal()
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.audioClips[0], 1);
         isFirstPortal = !isFirstPortal;
         swapButton.GetComponent<UnityEngine.UI.Image>().color = isFirstPortal ? colorPortal1 : colorPortal2;
     }
@@ -125,6 +132,8 @@ public class GameState : MonoBehaviour
     {
         if (isHover)
             return;
+        shootParticles.Play();
+        SoundManager.Instance.PlaySound(audioClips[1], 1); // play shoot sound
 
         Vector3 mousePosition = Input.mousePosition;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mousePosition);

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LevelsState : MonoBehaviour
 {
     [SerializeField] Transform _LevelContent;
+    [SerializeField] AudioClip audioClip;
     StateMachineManager _stateManager;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -47,6 +48,7 @@ public class LevelsState : MonoBehaviour
 
     void SetLevel(int lvlIndex)
     {
+        SoundManager.Instance.PlaySingleSound(audioClip, 1);
         GameState.player.lvlIndex = lvlIndex;
         _stateManager.ChangeSceneTo("Game");
     }

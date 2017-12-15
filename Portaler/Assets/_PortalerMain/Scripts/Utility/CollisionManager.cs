@@ -13,6 +13,7 @@ public class CollisionManager : MonoBehaviour
     public ColliderItemType colItemType;
     [HideInInspector] public ScriptableStealItem stealItem;
     [HideInInspector] public bool isItFirstPortal;
+    [SerializeField] AudioClip audioClip;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -38,5 +39,6 @@ public class CollisionManager : MonoBehaviour
             default:
                 break;
         }
+        SoundManager.Instance.PlaySound(audioClip, 1);
     }
 }

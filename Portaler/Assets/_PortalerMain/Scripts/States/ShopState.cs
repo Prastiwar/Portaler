@@ -6,6 +6,7 @@ using TMPro;
 public class ShopState : MonoBehaviour
 {
     [SerializeField] Transform _ShopContent;
+    [SerializeField] AudioClip[] audioClips;
     StateMachineManager _stateManager;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -67,6 +68,7 @@ public class ShopState : MonoBehaviour
     {
         if (_stateManager.data.Weapons[i].isPurchased) // On Wearing
         {
+            SoundManager.Instance.PlaySound(audioClips[0], 1); // wear sound
             GameState.player.weaponIndex = i;
 
             UpdateButton();
@@ -75,11 +77,13 @@ public class ShopState : MonoBehaviour
         {
             if (GameState.player.money >= _stateManager.data.Weapons[i].price)
             {
+                SoundManager.Instance.PlaySound(audioClips[1], 1); // buy sound
                 GameState.player.money -= _stateManager.data.Weapons[i].price;
                 _stateManager.data.Weapons[i].isPurchased = true;
             }
             else
             {
+                SoundManager.Instance.PlaySound(audioClips[2], 1); // reject sound
                 Debug.Log("You don't have money");
             }
         }

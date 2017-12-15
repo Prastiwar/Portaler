@@ -34,6 +34,7 @@ public class PauseState : MonoBehaviour
         string _StateTo;
         _StateTo = isPause ? "Game" : "Pause";
         SwitchPause();
+        SoundManager.Instance.PlaySound(SoundManager.Instance.audioClips[0], 1);
         StateMachineManager.Instance.ChangeStateTo(_StateTo);
     }
 
@@ -42,7 +43,8 @@ public class PauseState : MonoBehaviour
     {
         Time.timeScale = isPause ? 1 : 0;
         isPause = !isPause;
-        if(_PausePanel != null)
+        SoundManager.Instance.MusicStereo(isPause ? 1:0);
+        if (_PausePanel != null)
             _PausePanel.SetActive(!_PausePanel.activeSelf);
     }
 }

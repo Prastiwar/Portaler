@@ -18,6 +18,7 @@ public class SaveLoad
         //objects.Add(GameState.player);
         //objects.Add(data.SaveLoad(Scriptable.weapons, Cmd.Get, objects));
         //objects.Add(data.SaveLoad(Scriptable.levels, Cmd.Get, objects));
+        //objects.Add(SoundManager.Instance.Sound);
 
         //bf.Serialize(file, objects);
         //file.Close();
@@ -36,6 +37,7 @@ public class SaveLoad
         //GameState.player = (Player)objects[0];
         //data.SaveLoad(Scriptable.weapons, Cmd.Set, (List<System.Object>)objects[1]);
         //data.SaveLoad(Scriptable.levels, Cmd.Set, (List<System.Object>)objects[2]);
+        //SoundManager.Instance.Sound = (SoundOptions)objects[3];
         //file.Close();
     }
 }

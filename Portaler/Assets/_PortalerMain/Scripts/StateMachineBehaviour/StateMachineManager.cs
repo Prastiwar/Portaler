@@ -9,8 +9,7 @@ public class StateMachineManager : MonoBehaviour
 {
     public static StateMachineManager Instance;
     const int _MachineLayer = 9;
-
-    [SerializeField] AudioClip clip;
+    
     public Animator animator;
     public ScriptableData data;
 
@@ -39,7 +38,7 @@ public class StateMachineManager : MonoBehaviour
         float breakLast = 1.35f;
         // higher value = faster dampIn after break
         float breakAcceleration = 0.8f;
-        SoundManager.Instance.PlaySound(clip, 1);
+        SoundManager.Instance.PlaySound(SoundManager.Instance.audioClips[0], 1);
         Initiate.Fade(_SceneName, Color.black, dampIn, dampOut, true, breakLast, breakAcceleration);
     }
 

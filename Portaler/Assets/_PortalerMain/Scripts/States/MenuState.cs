@@ -9,12 +9,13 @@ public class MenuState : MonoBehaviour
     [SerializeField] Image musicButtonImage;
     [SerializeField] Image soundButtonImage;
     [SerializeField] AudioClip clipMusic;
-    [SerializeField] AudioClip clipSound;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         _stateManager = StateMachineManager.Instance;
-        SoundManager.Instance.PlayMusic(clipMusic, 1);
+        SoundManager.Instance.PlayMusic(clipMusic, 0.051f);
+        SoundManager.Instance.SetSpeaker(soundButtonImage);
+        SoundManager.Instance.SetQuaver(musicButtonImage);
     }
 
     public void OnStateUpdate(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -34,12 +35,12 @@ public class MenuState : MonoBehaviour
 
     public void OnMusicButton()
     {
-        SoundManager.Instance.PlayMusic(clipSound, 1);
+        SoundManager.Instance.PlaySound(SoundManager.Instance.audioClips[0], 1);
         SoundManager.Instance.ToggleMusic(musicButtonImage);
     }
     public void OnSoundButton()
     {
-        SoundManager.Instance.PlayMusic(clipSound, 1);
+        SoundManager.Instance.PlaySound(SoundManager.Instance.audioClips[0], 1);
         SoundManager.Instance.ToggleSound(soundButtonImage);
     }
 

@@ -8,14 +8,14 @@ using UnityEngine;
 public class PlayerMotor : MonoBehaviour
 {
     public static PlayerMotor instance;
-    public Transform player;
+    [HideInInspector] public Transform player;
 
     public float moveSpeed = 1200;
     public float jumpForce = 250;
     public Transform weaponPos;
     float moveHorizontal;
 
-    public Rigidbody2D rb2D;
+    [HideInInspector] public Rigidbody2D rb2D;
     Vector2 _rb2dVelocity;
     SpriteRenderer sr;
 
@@ -26,6 +26,9 @@ public class PlayerMotor : MonoBehaviour
     public Transform groundPos;
     public bool isGrounded = true;
     bool canMove = true;
+
+    [SerializeField] ParticleSystem _walkParticles;
+    [SerializeField] AudioClip[] audioClips;
 
     void Awake()
     {
@@ -63,20 +66,34 @@ public class PlayerMotor : MonoBehaviour
 
     public void OnWalkLeft()
     {
+        if (isGrounded)
+        {
+            SoundManager.Instance.PlaySound(audioClips[0], 1, true);
+            if (!_walkParticles.isPlaying)
+                _walkParticles.Play();
+        }
         moveHorizontal = -(moveSpeed * Time.fixedDeltaTime); // left
     }
     public void OnWalkRight()
     {
-          moveHorizontal = (moveSpeed * Time.fixedDeltaTime); // right
+        if (isGrounded)
+        {
+            SoundManager.Instance.PlaySound(audioClips[0], 1, true);
+            if (!_walkParticles.isPlaying)
+                _walkParticles.Play();
+        }
+        moveHorizontal = (moveSpeed * Time.fixedDeltaTime); // right
     }
     public void OnStop()
     {
         moveHorizontal = 0;
+        SoundManager.Instance.PlaySound(audioClips[0], 1, false);
     }
     public void OnJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
+            SoundManager.Instance.PlaySound(audioClips[1], 1);
             _rb2dVelocity += jumpForce * Vector2.up;
             isGrounded = false;
             rb2D.velocity = _rb2dVelocity;
