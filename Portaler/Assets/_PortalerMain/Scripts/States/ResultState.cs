@@ -60,14 +60,17 @@ public class ResultState : MonoBehaviour
     void SetResultScreen()
     {
         var main = _Particles.main;
+        var mainChild = _Particles.GetComponentInChildren<ParticleSystem>().main;
         if (hasLose)
         {
             main.startColor = _LoseColor;
+            mainChild.startColor = _LoseColor;
             SoundManager.Instance.PlayMusic(audioMusic[0], 0.1f);
         }
         else
         {
             main.startColor = _WinColor;
+            mainChild.startColor = _WinColor;
             SoundManager.Instance.PlayMusic(audioMusic[1], 0.1f);
         }
 
@@ -157,7 +160,8 @@ public class ResultState : MonoBehaviour
         _HeaderText.text = hasLose ? loseText : winText;
         _MoneyBalanceText.text = GameState.player.money.ToString();
         _StarScoreImage.fillAmount = CalculateScore();
-        _StarScoreText.text = (CalculateScore() * 100).ToString();
+
+        _StarScoreText.text = CalculateScore() < 0 ? "0" : (CalculateScore() * 100).ToString();
     }
 
     float CalculateScore()

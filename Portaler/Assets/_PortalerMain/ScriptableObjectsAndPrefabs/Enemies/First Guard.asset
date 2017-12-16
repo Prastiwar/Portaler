@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Name: First Guard
   m_EditorClassIdentifier: 
   rangeSigh: 8
-  moveSpeed: 0
+  moveSpeed: 2
   sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  enemyMask:
+    serializedVersion: 2
+    m_Bits: 256
+  animator: {fileID: 9100000, guid: 66e26b9c0a3db5d43918848b34132c4a, type: 2}

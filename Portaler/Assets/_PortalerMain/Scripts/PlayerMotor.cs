@@ -10,18 +10,26 @@ public class PlayerMotor : MonoBehaviour
     public static PlayerMotor instance;
     [HideInInspector] public Transform player;
 
+    // Forces
     public float moveSpeed = 1200;
     public float jumpForce = 250;
-    public Transform weaponPos;
     float moveHorizontal;
 
+    // Weapon
+    [SerializeField] Transform weaponPos;
+    SpriteRenderer weaponSr;
+
+    // Rigid and Sprite
     [HideInInspector] public Rigidbody2D rb2D;
     Vector2 _rb2dVelocity;
     SpriteRenderer sr;
 
+    // Animation
     Animator anim;
     int animWalk = Animator.StringToHash("Walk");
+    int animJump = Animator.StringToHash("Jump");
 
+    // Ground
     [SerializeField] LayerMask ground;
     public Transform groundPos;
     public bool isGrounded = true;
@@ -46,6 +54,7 @@ public class PlayerMotor : MonoBehaviour
         anim = GetComponent<Animator>();
         rb2D = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        weaponSr = weaponPos.GetComponent<SpriteRenderer>();
         rb2D.bodyType = RigidbodyType2D.Static;
     }
 
@@ -97,6 +106,7 @@ public class PlayerMotor : MonoBehaviour
             _rb2dVelocity += jumpForce * Vector2.up;
             isGrounded = false;
             rb2D.velocity = _rb2dVelocity;
+            anim.SetBool(animJump, true);
         }
     }
 
@@ -112,7 +122,10 @@ public class PlayerMotor : MonoBehaviour
             if (Physics2D.OverlapCircle(groundPos.position, 0.055f, ground))
             {
                 if (!isGrounded)
+                {
                     isGrounded = true;
+                    anim.SetBool(animJump, false);
+                }
             }
 
             // temporary pc jump
@@ -122,7 +135,7 @@ public class PlayerMotor : MonoBehaviour
             rb2D.velocity = _rb2dVelocity;
 
             // Change between Idle and Walk animation
-            /*if (moveHorizontal > 0 || moveHorizontal < 0)
+            if (moveHorizontal > 0 || moveHorizontal < 0)
             {
                 if (!anim.GetBool(animWalk))
                 {
@@ -135,17 +148,22 @@ public class PlayerMotor : MonoBehaviour
                 {
                     ChangeRunState();
                 }
-            }*/
-
+            }
             // Face to direction
-            if (moveHorizontal > 0 && sr.flipX) // if going right, set "flip" to false - (to right direction)
+            Vector2 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            diff.Normalize();
+            if ((moveHorizontal > 0 || diff.x > 0) && sr.flipX) // if going right, set "flip" to false - (to right direction)
             {
                 sr.flipX = false;
+                weaponSr.flipY = false;
             }
-            else if (moveHorizontal < 0 && !sr.flipX) // if going left, set "flip" to true - (to left direction)
+            else if ((moveHorizontal < 0 || diff.x < 0) && !sr.flipX) // if going left, set "flip" to true - (to left direction)
             {
                 sr.flipX = true;
+                weaponSr.flipY = true;
             }
+            if (transform.position.y < -10)
+                GameState.GameOver(true);
         }
     }
 

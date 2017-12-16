@@ -20,6 +20,5 @@ MonoBehaviour:
   Levels:
   - {fileID: 11400000, guid: 9e0c642ef35c0cf44b145ce9a6f5c63f, type: 2}
   - {fileID: 11400000, guid: 2cf11b6d2e593194fbdf2db63e29c11b, type: 2}
-  - {fileID: 11400000, guid: 2cf11b6d2e593194fbdf2db63e29c11b, type: 2}
   StealItems:
   - {fileID: 11400000, guid: 430e6359d2d903a4eb841767a61343fe, type: 2}

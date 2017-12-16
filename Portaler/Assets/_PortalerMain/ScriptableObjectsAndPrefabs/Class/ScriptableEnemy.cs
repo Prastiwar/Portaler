@@ -7,5 +7,6 @@ public class ScriptableEnemy : ScriptableObject
 {
     public float rangeSigh;
     public float moveSpeed;
-    public Sprite sprite;
+    public RuntimeAnimatorController animator;
+    public LayerMask enemyMask;
 }

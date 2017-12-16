@@ -40,6 +40,7 @@ public class LevelsState : MonoBehaviour
             level.InitializeItem();
             level.SpawnItem(_LevelContent);
             level.GetIcon(1).fillAmount = level.starScoreAmount;
+            level.SetText(0, (x + 1).ToString());
             level.GetButton(0).GetComponent<Image>().sprite = level.isUnlocked ? level.sprite : level.lockedSprite;
             level.GetButton(0).interactable = level.isUnlocked;
             level.AddListenerOnButton(0, () => SetLevel(x), true);
