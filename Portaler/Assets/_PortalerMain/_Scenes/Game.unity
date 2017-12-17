@@ -11091,7 +11091,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 487448773}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 1.77, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1828501434}
@@ -11291,7 +11291,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 820753721}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -254.17033, y: -501.37653, z: -7.336792}
+  m_LocalPosition: {x: -254.92033, y: -503.1465, z: -7.336792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 915499051}
@@ -18782,7 +18782,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1307653390}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -254.17033, y: -501.37653, z: -7.336792}
+  m_LocalPosition: {x: -254.92033, y: -503.1465, z: -7.336792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1672207702}
@@ -22295,6 +22295,68 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1001 &1446746457
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4832514661690346, guid: 1a1c295bcb2f7404c914080cabf8bcfd, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.34535164
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832514661690346, guid: 1a1c295bcb2f7404c914080cabf8bcfd, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -9.140494
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832514661690346, guid: 1a1c295bcb2f7404c914080cabf8bcfd, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.10317547
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832514661690346, guid: 1a1c295bcb2f7404c914080cabf8bcfd, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832514661690346, guid: 1a1c295bcb2f7404c914080cabf8bcfd, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832514661690346, guid: 1a1c295bcb2f7404c914080cabf8bcfd, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832514661690346, guid: 1a1c295bcb2f7404c914080cabf8bcfd, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4832514661690346, guid: 1a1c295bcb2f7404c914080cabf8bcfd, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114139488649093058, guid: 1a1c295bcb2f7404c914080cabf8bcfd,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114139488649093058, guid: 1a1c295bcb2f7404c914080cabf8bcfd,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224125815447760196, guid: 1a1c295bcb2f7404c914080cabf8bcfd,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.8899994
+      objectReference: {fileID: 0}
+    - target: {fileID: 224125815447760196, guid: 1a1c295bcb2f7404c914080cabf8bcfd,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 13.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 1a1c295bcb2f7404c914080cabf8bcfd, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1463344216
 GameObject:
   m_ObjectHideFlags: 0
@@ -26819,7 +26881,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b6c6fb24e3d0d94c83af9ceba9a6269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comingSoonScene: {fileID: 0}
+  comingSoonScene: {fileID: 1951639426126290, guid: 1a1c295bcb2f7404c914080cabf8bcfd,
+    type: 2}
   firePoint: {fileID: 1578753280}
   colorPortal1: {r: 1, g: 0, b: 0, a: 1}
   colorPortal2: {r: 1, g: 1, b: 0, a: 1}

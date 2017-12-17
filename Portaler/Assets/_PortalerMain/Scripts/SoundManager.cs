@@ -74,9 +74,6 @@ public class SoundManager : MonoBehaviour
 
     public void PlayMusic(AudioClip _clip, float _volume)
     {
-        if (Sound.isMusicMuted)
-            return;
-
         MusicStereo(0);
         themeSource.Stop();
         themeSource.clip = _clip;
@@ -102,9 +99,11 @@ public class SoundManager : MonoBehaviour
     public void SetSpeaker(Image _image)
     {
         _image.sprite = Sound.isSoundMuted ? OnOff[1] : OnOff[0];
+        audioSource.mute = Sound.isSoundMuted ? true : false;
     }
     public void SetQuaver(Image _image)
     {
         _image.sprite = Sound.isMusicMuted ? OnOff[3] : OnOff[2];
+        themeSource.mute = Sound.isMusicMuted ? true : false;
     }
 }

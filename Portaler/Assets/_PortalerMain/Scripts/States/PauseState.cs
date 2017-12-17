@@ -26,6 +26,7 @@ public class PauseState : MonoBehaviour
 
     public void OnChangeSceneButton(string _SceneName)
     {
+        SoundManager.Instance.PlayMusic(SoundManager.Instance.audioClips[0], 0.051f);
         _stateManager.ChangeSceneTo(_SceneName);
     }
 
@@ -34,7 +35,6 @@ public class PauseState : MonoBehaviour
         string _StateTo;
         _StateTo = isPause ? "Game" : "Pause";
         SwitchPause();
-        SoundManager.Instance.PlaySound(SoundManager.Instance.audioClips[0], 1);
         StateMachineManager.Instance.ChangeStateTo(_StateTo);
     }
 
