@@ -30,7 +30,6 @@ public class GameState : MonoBehaviour
 
     static GameObject Portal_1;
     static GameObject Portal_2;
-    bool isHover = false;
     bool isFirstPortal = true;
 
     public void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
@@ -58,11 +57,6 @@ public class GameState : MonoBehaviour
 
     public void OnStateExit(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-    }
-
-    public void Hovering(bool boolean)
-    {
-        isHover = boolean;
     }
 
     public static void GameOver(bool _isSpotted)
@@ -130,7 +124,7 @@ public class GameState : MonoBehaviour
     // Active and setting portal position on wall
     public void SetPortal(GameObject portal)
     {
-        if (isHover)
+        if (PlayerMotor.instance.isHover)
             return;
         shootParticles.Play();
         SoundManager.Instance.PlaySound(audioClips[1], 1); // play shoot sound

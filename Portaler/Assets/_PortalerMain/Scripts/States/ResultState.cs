@@ -61,6 +61,7 @@ public class ResultState : MonoBehaviour
     {
         var main = _Particles.main;
         var mainChild = _Particles.transform.GetChild(0).GetComponentInChildren<ParticleSystem>().main;
+        _Particles.transform.GetChild(0).GetComponentInChildren<ParticleSystem>().Play();
         if (hasLose)
         {
             main.startColor = _LoseColor;

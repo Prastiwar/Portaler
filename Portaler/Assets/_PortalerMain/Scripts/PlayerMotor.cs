@@ -32,7 +32,8 @@ public class PlayerMotor : MonoBehaviour
     // Ground
     [SerializeField] LayerMask ground;
     public Transform groundPos;
-    public bool isGrounded = true;
+    bool isGrounded = true;
+    public bool isHover = false;
     bool canMove = true;
 
     [SerializeField] ParticleSystem _walkParticles;
@@ -61,10 +62,17 @@ public class PlayerMotor : MonoBehaviour
     void LateUpdate()
     {
         // Gun is looking at mouse position
-        Vector2 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - weaponPos.position;
-        diff.Normalize();
-        float rotZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
-        weaponPos.rotation = Quaternion.Euler(0f, 0f, rotZ);
+        if (!isHover)
+        {
+            Vector2 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - weaponPos.position;
+            diff.Normalize();
+            float rotZ = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+            weaponPos.rotation = Quaternion.Euler(0f, 0f, rotZ);
+        }
+    }
+    public void ToggleHover(bool _boolean)
+    {
+        isHover = _boolean;
     }
 
     void FixedUpdate()
@@ -92,6 +100,7 @@ public class PlayerMotor : MonoBehaviour
                 _walkParticles.Play();
         }
         moveHorizontal = (moveSpeed * Time.fixedDeltaTime); // right
+        sr.flipX = false;
     }
     public void OnStop()
     {
@@ -100,7 +109,7 @@ public class PlayerMotor : MonoBehaviour
     }
     public void OnJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (/*Input.GetKeyDown(KeyCode.Space) && */isGrounded)
         {
             SoundManager.Instance.PlaySound(audioClips[1], 1);
             _rb2dVelocity += jumpForce * Vector2.up;
@@ -113,7 +122,7 @@ public class PlayerMotor : MonoBehaviour
     void Move()
     {
         // temporary pc left right movement
-        float moveHorizontal = Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime;
+        //float moveHorizontal = Input.GetAxis("Horizontal") * moveSpeed * Time.fixedDeltaTime;
         _rb2dVelocity = rb2D.velocity;
 
         if (canMove)
@@ -129,7 +138,7 @@ public class PlayerMotor : MonoBehaviour
             }
 
             // temporary pc jump
-            OnJump();
+            //OnJump();
             
             _rb2dVelocity.x = moveHorizontal;
             rb2D.velocity = _rb2dVelocity;
@@ -150,18 +159,23 @@ public class PlayerMotor : MonoBehaviour
                 }
             }
             // Face to direction
-            Vector2 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            diff.Normalize();
-            if ((moveHorizontal > 0 || diff.x > 0) && sr.flipX) // if going right, set "flip" to false - (to right direction)
+            if (!isHover)
             {
-                sr.flipX = false;
-                weaponSr.flipY = false;
+                Vector2 diff = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+                diff.Normalize();
+
+                if ((moveHorizontal > 0 || diff.x > 0) && sr.flipX) // if going right, set "flip" to false - (to right direction)
+                {
+                    sr.flipX = false;
+                    weaponSr.flipY = false;
+                }
+                else if ((moveHorizontal < 0 || diff.x < 0) && !sr.flipX) // if going left, set "flip" to true - (to left direction)
+                {
+                    sr.flipX = true;
+                    weaponSr.flipY = true;
+                }
             }
-            else if ((moveHorizontal < 0 || diff.x < 0) && !sr.flipX) // if going left, set "flip" to true - (to left direction)
-            {
-                sr.flipX = true;
-                weaponSr.flipY = true;
-            }
+
             if (transform.position.y < -10)
                 GameState.GameOver(true);
         }
