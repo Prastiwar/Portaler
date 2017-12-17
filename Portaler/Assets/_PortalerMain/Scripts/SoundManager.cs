@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public struct SoundOptions
 {
     public bool isMusicMuted;
@@ -19,9 +20,6 @@ public class SoundManager : MonoBehaviour
     AudioSource audioSource;
     AudioSource themeSource;
 
-    bool isMusicMuted = false;
-    bool isSoundMuted = false;
-
     void Awake()
     {
         if (Instance == null)
@@ -36,14 +34,11 @@ public class SoundManager : MonoBehaviour
 
         themeSource = transform.GetChild(0).GetComponentInChildren<AudioSource>();
         audioSource = GetComponent<AudioSource>();
-
-        isMusicMuted = Sound.isMusicMuted;
-        isSoundMuted = Sound.isSoundMuted;
     }
 
     public void PlaySound(AudioClip _clip, float _volume)
     {
-        if (isSoundMuted)
+        if (Sound.isSoundMuted)
             return;
 
         audioSource.PlayOneShot(_clip, _volume);
@@ -51,7 +46,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(AudioClip _clip, float _volume, bool _loop)
     {
-        if (isSoundMuted)
+        if (Sound.isSoundMuted)
             return;
 
         audioSource.Stop();
@@ -63,7 +58,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySingleSound(AudioClip _clip, float _volume)
     {
-        if (isSoundMuted)
+        if (Sound.isSoundMuted)
             return;
 
         audioSource.Stop();
@@ -79,7 +74,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayMusic(AudioClip _clip, float _volume)
     {
-        if (isMusicMuted)
+        if (Sound.isMusicMuted)
             return;
 
         MusicStereo(0);
@@ -93,23 +88,23 @@ public class SoundManager : MonoBehaviour
 
     public void ToggleMusic(Image _image)
     {
-        isMusicMuted = !isMusicMuted;
+        Sound.isMusicMuted = !Sound.isMusicMuted;
         SetQuaver(_image);
-        themeSource.mute = isMusicMuted ? true : false;
+        themeSource.mute = Sound.isMusicMuted ? true : false;
     }
     public void ToggleSound(Image _image)
     {
-        isSoundMuted = !isSoundMuted;
+        Sound.isSoundMuted = !Sound.isSoundMuted;
         SetSpeaker(_image);
-        audioSource.mute = isSoundMuted ? true : false;
+        audioSource.mute = Sound.isSoundMuted ? true : false;
     }
 
     public void SetSpeaker(Image _image)
     {
-        _image.sprite = isSoundMuted ? OnOff[1] : OnOff[0];
+        _image.sprite = Sound.isSoundMuted ? OnOff[1] : OnOff[0];
     }
     public void SetQuaver(Image _image)
     {
-        _image.sprite = isMusicMuted ? OnOff[3] : OnOff[2];
+        _image.sprite = Sound.isMusicMuted ? OnOff[3] : OnOff[2];
     }
 }

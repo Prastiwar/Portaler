@@ -20,7 +20,7 @@ MonoBehaviour:
   buttons:
   - {fileID: 114790002753989296, guid: 108c8d3dc97dda94086304a6b30fadba, type: 2}
   scriptableItem: {fileID: 11400000, guid: a1e2a7c182db6d640bed9b880abfe8c3, type: 2}
-  isUnlocked: 1
+  isUnlocked: 0
   levelPrefab: {fileID: 0}
   startWaypoint: {fileID: 0}
   sprite: {fileID: 21300000, guid: 9dc7968da54cc7c40afb5928ccbac0d4, type: 3}

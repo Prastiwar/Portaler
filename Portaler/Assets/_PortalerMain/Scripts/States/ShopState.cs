@@ -84,7 +84,6 @@ public class ShopState : MonoBehaviour
             else
             {
                 SoundManager.Instance.PlaySound(audioClips[2], 1); // reject sound
-                Debug.Log("You don't have money");
             }
         }
     }

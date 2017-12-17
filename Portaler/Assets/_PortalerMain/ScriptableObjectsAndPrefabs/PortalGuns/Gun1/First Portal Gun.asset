@@ -17,10 +17,10 @@ MonoBehaviour:
   buttons: []
   scriptableItem: {fileID: 11400000, guid: 17a6549766e4c59428744ef7426575fd, type: 2}
   isPurchased: 1
-  sprite: {fileID: 21300000, guid: fcdc00a8722e44443b62bc2d8c358b25, type: 3}
+  sprite: {fileID: 21300000, guid: 3fa11b895b97c994b838a78aab652f5c, type: 3}
   price: 10
   maxAmmo: 10
-  ammo: -8
+  ammo: 10
   distance: 20
   portal_1: {fileID: 1160254221278806, guid: da10467538c53df4fa5c02080ff7d706, type: 2}
   portal_2: {fileID: 1747641441801938, guid: fd43acc021562d2449f7b27093afad5f, type: 2}

@@ -138,7 +138,7 @@ public class GameState : MonoBehaviour
         Vector3 mousePosition = Input.mousePosition;
         Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mousePosition);
         Vector2 direction = (mouseWorld - firePoint.position).normalized;
-        Debug.DrawRay(firePoint.position, direction * 100, Color.cyan, 1.3f);
+        //Debug.DrawRay(firePoint.position, direction * 100, Color.cyan, 1.3f);
 
         RaycastHit2D hit2D = Physics2D.Raycast(firePoint.position, direction, _stateManager.data.Weapons[player.weaponIndex].distance);
         _stateManager.data.Weapons[player.weaponIndex].ammo--;
